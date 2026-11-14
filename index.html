@@ -27,6 +27,12 @@
     .choice.active { color:#205cb4; border-color:#3977da; background:#ecf4ff; }
     .choice-icon { font-size:22px; display:block; margin-bottom:9px; }
     .ko .choice { min-height:63px; }
+    .supplier-choice { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; }
+    .supplier-logo { width:min(100%,140px); height:44px; object-fit:contain; display:block; }
+    .supplier-label { font-size:12px; letter-spacing:.35px; }
+    .supplier-choice.logo-failed .supplier-logo { display:none; }
+    .supplier-choice.logo-failed .supplier-label { font-size:15px; }
+
     .sectionhead { display:flex; justify-content:space-between; align-items:center; gap:12px; }
     .reset { border:0; background:transparent; padding:7px; color:#64748b; font:inherit; font-size:12px; font-weight:600; cursor:pointer; }
     .reset:hover { color:#1657a5; }
@@ -50,9 +56,9 @@
       <section class="section">
         <h2 class="step">01 — SELEZIONA CATEGORIA</h2>
         <div class="choices" id="categories">
-          <button type="button" class="choice" data-category="FIRMA"><span class="choice-icon">✍</span>FIRMA</button>
-          <button type="button" class="choice" data-category="PROMEMORIA"><span class="choice-icon">◷</span>PROMEMORIA</button>
-          <button type="button" class="choice" data-category="KO"><span class="choice-icon">⚠</span>KO</button>
+          <button type="button" class="choice" data-category="FIRMA"><span class="choice-icon" aria-hidden="true">✍️📄</span>FIRMA</button>
+          <button type="button" class="choice" data-category="PROMEMORIA"><span class="choice-icon" aria-hidden="true">⚠️📄</span>PROMEMORIA</button>
+          <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
         </div>
       </section>
       <section class="section" id="secondSection" hidden>
@@ -99,6 +105,13 @@
       }
     };
 
+    // Loghi fornitori forniti da Billding. In caso di errore rimane visibile il nome.
+    const loghi = {
+      ENEL: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/enel/enel_logo.svg',
+      PLENITUDE: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/plenitude/plenitude_logo.svg',
+      ILLUMIA: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/illumia/logo+illumia.svg'
+    };
+
     const state = { category: null, option: null };
     const categoryButtons = [...document.querySelectorAll('[data-category]')];
     const options = document.getElementById('options');
@@ -122,7 +135,22 @@
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
-        button.textContent = name;
+        button.dataset.option = name;
+        if (category !== 'KO' && loghi[name]) {
+          button.classList.add('supplier-choice');
+          const logo = document.createElement('img');
+          logo.className = 'supplier-logo';
+          logo.src = loghi[name];
+          logo.alt = '';
+          logo.loading = 'lazy';
+          logo.addEventListener('error', () => button.classList.add('logo-failed'));
+          const label = document.createElement('span');
+          label.className = 'supplier-label';
+          label.textContent = name;
+          button.append(logo, label);
+        } else {
+          button.textContent = name;
+        }
         button.addEventListener('click', () => chooseOption(name));
         options.appendChild(button);
       }
@@ -134,7 +162,7 @@
     function chooseOption(option) {
       state.option = option;
       for (const button of options.children) {
-        const active = button.textContent === option;
+        const active = button.dataset.option === option;
         button.classList.toggle('active', active);
         button.setAttribute('aria-pressed', String(active));
       }
