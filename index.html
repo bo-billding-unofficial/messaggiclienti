@@ -86,6 +86,10 @@
         <h2 class="step">04 — SELEZIONA SOLUZIONE</h2>
         <div class="choices subchoices" id="suboptions"></div>
       </section>
+      <section class="section" id="thirdSection" hidden>
+        <h2 class="step">05 — SELEZIONA SOLUZIONE</h2>
+        <div class="choices subchoices" id="thirdoptions"></div>
+      </section>
       <section class="section" id="messagesSection" hidden>
         <h2 class="step" id="messagesHeading">04 — MESSAGGI DISPONIBILI</h2>
         <div id="messages"></div>
@@ -150,38 +154,40 @@
     ]
   },
   "KO": {
-    "IBAN NON INTESTATO": {
-      "Risolvibile con dati terzi": [
+    "IBAN": {
+      "IBAN NON INTESTATO": {
+        "Risolvibile con dati terzi": [
+          {
+            "titolo": "Risolvibile con dati terzi",
+            "testo": "Buongiorno,\n\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\n\nPer completare la procedura il fornitore richiede anche NOME, COGNOME e CODICE FISCALE dell'intestatario dell'IBAN.\n\nLe chiedo gentilmente di fornirmi i dati qui in chat.\n\nGrazie mille."
+          }
+        ],
+        "KO serve IBAN dell'intestatario": [
+          {
+            "titolo": "KO serve IBAN dell'intestatario",
+            "testo": "Buongiorno,\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\nPer completare la procedura il fornitore richiede un'IBAN intestato all'INTESTATARIO dell'utenza\n\nLe chiedo gentilmente se può fornirmi un IBAN suo, per mandare avanti la pratica.\n\nGrazie mille."
+          }
+        ]
+      },
+      "IBAN RICHIESTO": [
         {
-          "titolo": "Risolvibile con dati terzi",
-          "testo": "Buongiorno,\n\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\n\nPer completare la procedura il fornitore richiede anche NOME, COGNOME e CODICE FISCALE dell'intestatario dell'IBAN.\n\nLe chiedo gentilmente di fornirmi i dati qui in chat.\n\nGrazie mille."
+          "titolo": "IBAN RICHIESTO",
+          "testo": "Buongiorno,\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nPer completare la procedura il fornitore richiede necessariamente un'IBAN per la domiciliazione bancaria.\n\nLe chiedo gentilmente se può fornirmi un IBAN, per mandare avanti la pratica.\n\nGrazie mille."
         }
       ],
-      "KO serve IBAN dell'intestatario": [
+      "IBAN ERRATO INESISTENTE": [
         {
-          "titolo": "KO serve IBAN dell'intestatario",
-          "testo": "Buongiorno,\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\nPer completare la procedura il fornitore richiede un'IBAN intestato all'INTESTATARIO dell'utenza\n\nLe chiedo gentilmente se può fornirmi un IBAN suo, per mandare avanti la pratica.\n\nGrazie mille."
+          "titolo": "IBAN ERRATO INESISTENTE",
+          "testo": "Buongiorno,\n\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito ha una sintassi errata.\n\nPotrebbe esserci una o più cifre errate, oppure la banca è stata acquisita e l'IBAN aggiornato.\n\nLe chiedo gentilmente di verificare e fornirmi l'IBAN corretto qui in chat.\n\nGrazie mille."
+        }
+      ],
+      "IBAN PREPAGATA": [
+        {
+          "titolo": "IBAN PREPAGATA",
+          "testo": "Buongiorno,\n\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito sia associato ad una carta PREPAGATA.\n\nPurtroppo, il fornitore non lo accetta per la domiciliazione bancaria.\n\nLe chiedo gentilmente di fornirmi un'IBAN alternativo qui in chat.\n\nPuò eventualmente scegliere come metodo di pagamento \"bollettino\".\n\nAttendo conferma su come procedere.\n\nGrazie mille."
         }
       ]
     },
-    "IBAN RICHIESTO": [
-      {
-        "titolo": "IBAN RICHIESTO",
-        "testo": ""
-      }
-    ],
-    "IBAN INESISTENTE": [
-      {
-        "titolo": "IBAN INESISTENTE",
-        "testo": ""
-      }
-    ],
-    "IBAN PREPAGATA": [
-      {
-        "titolo": "IBAN PREPAGATA",
-        "testo": ""
-      }
-    ],
     "KO CREDITIZIO": [
       {
         "titolo": "KO CREDITIZIO",
@@ -244,7 +250,7 @@
       ILLUMIA: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/illumia/logo+illumia.svg'
     };
 
-    const state = { operator: null, category: null, option: null, suboption: null };
+    const state = { operator: null, category: null, option: null, suboption: null, thirdoption: null };
     const operatorButtons = [...document.querySelectorAll('[data-operator]')];
     const categoryButtons = [...document.querySelectorAll('[data-category]')];
     const categorySection = document.getElementById('categorySection');
@@ -254,6 +260,8 @@
     const messagesSection = document.getElementById('messagesSection');
     const suboptionSection = document.getElementById('suboptionSection');
     const suboptions = document.getElementById('suboptions');
+    const thirdSection = document.getElementById('thirdSection');
+    const thirdoptions = document.getElementById('thirdoptions');
     const messagesHeading = document.getElementById('messagesHeading');
     const intro = document.getElementById('intro');
 
@@ -267,8 +275,10 @@
       categorySection.hidden = false;
       intro.hidden = true;
       if (state.category && state.option) {
-        if (state.suboption) renderMessages(catalogo[state.category][state.option][state.suboption]);
-        else chooseOption(state.option);
+        let entry = catalogo[state.category][state.option];
+        if (state.suboption) entry = entry[state.suboption];
+        if (state.thirdoption) entry = entry[state.thirdoption];
+        if (Array.isArray(entry)) renderMessages(entry);
       } // aggiorna nome nei messaggi
     }
 
@@ -276,7 +286,9 @@
       state.category = category;
       state.option = null;
       state.suboption = null;
+      state.thirdoption = null;
       suboptionSection.hidden = true;
+      thirdSection.hidden = true;
       categoryButtons.forEach(button => {
         const active = button.dataset.category === category;
         button.classList.toggle('active', active);
@@ -313,6 +325,7 @@
       secondSection.hidden = false;
       messagesSection.hidden = true;
       suboptionSection.hidden = true;
+      thirdSection.hidden = true;
       intro.hidden = true;
     }
 
@@ -322,9 +335,46 @@
       return testo.replace(/\b(Daniele|Armando)\b/g, state.operator);
     }
 
+    function makeOptionButtons(container, entry, depth) {
+      container.replaceChildren();
+      for (const name of Object.keys(entry)) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'choice';
+        button.textContent = name;
+        button.dataset.suboption = name;
+        button.addEventListener('click', () => {
+          for (const other of container.children) {
+            const active = other === button;
+            other.classList.toggle('active', active);
+            other.setAttribute('aria-pressed', String(active));
+          }
+          if (depth === 1) {
+            state.suboption = name;
+            state.thirdoption = null;
+            thirdSection.hidden = true;
+            const next = entry[name];
+            if (Array.isArray(next)) renderMessages(next);
+            else {
+              thirdSection.querySelector('.step').textContent = '05 — SELEZIONA SOLUZIONE';
+              makeOptionButtons(thirdoptions, next, 2);
+              thirdSection.hidden = false;
+              messagesSection.hidden = true;
+            }
+          } else {
+            state.thirdoption = name;
+            renderMessages(entry[name]);
+          }
+        });
+        container.appendChild(button);
+      }
+    }
+
     function chooseOption(option) {
       state.option = option;
       state.suboption = null;
+      state.thirdoption = null;
+      thirdSection.hidden = true;
       for (const button of options.children) {
         const active = button.dataset.option === option;
         button.classList.toggle('active',active);
@@ -332,25 +382,8 @@
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        // Un livello aggiuntivo solo per IBAN NON INTESTATO.
-        suboptions.replaceChildren();
-        for (const name of Object.keys(entry)) {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.className = 'choice';
-          button.textContent = name;
-          button.dataset.suboption = name;
-          button.addEventListener('click', () => {
-            state.suboption = name;
-            for (const other of suboptions.children) {
-              const active = other.dataset.suboption === name;
-              other.classList.toggle('active', active);
-              other.setAttribute('aria-pressed', String(active));
-            }
-            renderMessages(entry[name]);
-          });
-          suboptions.appendChild(button);
-        }
+        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : '04 — SELEZIONA SOLUZIONE';
+        makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
         messagesSection.hidden = true;
       } else {
@@ -360,7 +393,7 @@
     }
 
     function renderMessages(items) {
-      messagesHeading.textContent = (state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
+      messagesHeading.textContent = (state.thirdoption ? '06' : state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
       messages.replaceChildren();
       for (const item of items) {
         const card = document.createElement('article');
@@ -419,7 +452,9 @@
       state.category = null;
       state.option = null;
       state.suboption = null;
+      state.thirdoption = null;
       suboptionSection.hidden = true;
+      thirdSection.hidden = true;
       operatorButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
       categoryButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
       categorySection.hidden = true;
