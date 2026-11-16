@@ -20,7 +20,7 @@
     .section:last-child { margin-bottom:0; }
     .step { color:#69778a; font-size:12px; font-weight:750; letter-spacing:1.2px; margin:0 0 13px; }
     .choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-    .choices.categories { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .choices.categories { grid-template-columns:repeat(3,minmax(0,1fr)); }
     .choices.questions { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .choices.ko { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .choice { min-height:88px; border:1px solid #dce4ee; background:#f9fbfe; border-radius:12px; color:#283a51; padding:15px 10px; font:inherit; font-size:18px; font-weight:750; cursor:pointer; transition: border-color .15s,background .15s,transform .15s; }
@@ -28,6 +28,7 @@
     .choice:focus-visible,.copy:focus-visible,.reset:focus-visible { outline:3px solid #89b8ff; outline-offset:2px; }
     .choice.active { color:#205cb4; border-color:#3977da; background:#ecf4ff; }
     .choice-icon { font-size:30px; display:block; margin-bottom:9px; }
+    .categories .choice { overflow-wrap:anywhere; }
     .ko .choice { min-height:77px; }
     .questions .choice { min-height:110px; line-height:1.35; }
     .operator-choice { font-size:20px; min-height:75px; }
@@ -61,9 +62,9 @@
       <section class="section">
         <h2 class="step">01 — SELEZIONA OPERATORE</h2>
         <div class="choices" id="operators">
-          <button type="button" class="choice operator-choice" data-operator="Daniele">👤 Daniele</button>
-          <button type="button" class="choice operator-choice" data-operator="Armando">👤 Armando</button>
-          <button type="button" class="choice operator-choice" data-operator="Claudio">👤 Claudio</button>
+          <button type="button" class="choice operator-choice" data-operator="Daniele">✈️ Daniele</button>
+          <button type="button" class="choice operator-choice" data-operator="Armando">🌱 Armando</button>
+          <button type="button" class="choice operator-choice" data-operator="Claudio">⚾ Claudio</button>
         </div>
       </section>
       <section class="section" id="categorySection" hidden>
@@ -73,6 +74,7 @@
           <button type="button" class="choice" data-category="PROMEMORIA"><span class="choice-icon" aria-hidden="true">⚠️📄</span>PROMEMORIA</button>
           <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
           <button type="button" class="choice" data-category="DOMANDE"><span class="choice-icon" aria-hidden="true">🤔❓</span>DOMANDE</button>
+          <button type="button" class="choice" data-category="CHIUSURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬✅</span>CHIUSURA CONVERSAZIONE</button>
         </div>
       </section>
       <section class="section" id="secondSection" hidden>
@@ -180,6 +182,20 @@
       }
     ]
   },
+  "CHIUSURA CONVERSAZIONE": {
+    "Resto a disposizione": [
+        {
+            "titolo": "Resto a disposizione",
+            "testo": "Benissimo.\nRimango a disposizione per qualsiasi ulteriore chiarimento o necessità.\nLe auguro una buona giornata.\nDaniele\n*Team Billding*"
+        }
+    ],
+    "Invito recensione": [
+        {
+            "titolo": "Invito recensione",
+            "testo": "A questo punto, le chiedo un piccolissimo favore! 😁\nSe può farmi una brevissima recensione, menzionandomi \"Daniele\" se ha apprezzato il servizio e il supporto!\nBasta una riga, e ci aiuterebbe molto a crescere. Le lascio il link! Grazie in anticipo!\n\nhttps://it.trustpilot.com/evaluate/billding.it"
+        }
+    ]
+},
   "DOMANDE": {
     "Quando si attiverà la mia fornitura? (LUCE 24h)": [
       {
@@ -235,8 +251,8 @@
       });
       options.replaceChildren();
       options.classList.toggle('ko', category === 'KO');
-      options.classList.toggle('questions', category === 'DOMANDE');
-      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', FIRMA:'FORNITORE', PROMEMORIA:'FORNITORE' };
+      options.classList.toggle('questions', category === 'DOMANDE' || category === 'CHIUSURA CONVERSAZIONE');
+      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FORNITORE', PROMEMORIA:'FORNITORE' };
       document.getElementById('secondHeading').textContent = '03 — SELEZIONA ' + labels[category];
       for (const name of Object.keys(catalogo[category])) {
         const button = document.createElement('button');
