@@ -20,33 +20,38 @@
     .section:last-child { margin-bottom:0; }
     .step { color:#69778a; font-size:12px; font-weight:750; letter-spacing:1.2px; margin:0 0 13px; }
     .choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .choices.categories { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .choices.questions { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .choices.ko { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .choice { min-height:88px; border:1px solid #dce4ee; background:#f9fbfe; border-radius:12px; color:#283a51; padding:15px 10px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; transition: border-color .15s,background .15s,transform .15s; }
+    .choice { min-height:88px; border:1px solid #dce4ee; background:#f9fbfe; border-radius:12px; color:#283a51; padding:15px 10px; font:inherit; font-size:18px; font-weight:750; cursor:pointer; transition: border-color .15s,background .15s,transform .15s; }
     .choice:hover { border-color:#3b75d1; background:#f0f6ff; transform:translateY(-1px); }
     .choice:focus-visible,.copy:focus-visible,.reset:focus-visible { outline:3px solid #89b8ff; outline-offset:2px; }
     .choice.active { color:#205cb4; border-color:#3977da; background:#ecf4ff; }
-    .choice-icon { font-size:22px; display:block; margin-bottom:9px; }
-    .ko .choice { min-height:63px; }
+    .choice-icon { font-size:30px; display:block; margin-bottom:9px; }
+    .ko .choice { min-height:77px; }
+    .questions .choice { min-height:110px; line-height:1.35; }
+    .operator-choice { font-size:20px; min-height:75px; }
     .supplier-choice { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; }
     .supplier-logo { width:min(100%,140px); height:44px; object-fit:contain; display:block; }
-    .supplier-label { font-size:12px; letter-spacing:.35px; }
+    .supplier-label { font-size:17px; letter-spacing:.35px; }
     .supplier-choice.logo-failed .supplier-logo { display:none; }
-    .supplier-choice.logo-failed .supplier-label { font-size:15px; }
+    .supplier-choice.logo-failed .supplier-label { font-size:18px; }
 
     .sectionhead { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .reset { border:0; background:transparent; padding:7px; color:#64748b; font:inherit; font-size:12px; font-weight:600; cursor:pointer; }
+    .reset { border:0; background:transparent; padding:7px; color:#64748b; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
     .reset:hover { color:#1657a5; }
     .message { border:1px solid #dfe5ee; border-radius:12px; padding:19px; margin-top:12px; }
     .message h3 { margin:0 0 13px; font-size:15px; }
     .message p { white-space:pre-wrap; overflow-wrap:anywhere; margin:0; padding:17px; font-size:14px; line-height:1.65; background:#f5f7fb; border-radius:9px; }
     .actions { display:flex; justify-content:flex-end; margin-top:14px; }
-    .copy { border:0; background:#2563bd; color:#fff; font:inherit; font-size:13px; font-weight:750; border-radius:9px; padding:11px 16px; cursor:pointer; }
+    .copy { border:0; background:#2563bd; color:#fff; font:inherit; font-size:16px; font-weight:750; border-radius:9px; padding:11px 16px; cursor:pointer; }
     .copy:hover { background:#164c98; }
     .copy.copied { background:#187851; }
+    .empty { color:#7a8492; font-style:italic; background:#f5f7fb; border-radius:9px; padding:17px; }
     .intro { color:#8491a2; text-align:center; padding:38px 8px; font-size:14px; }
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
     [hidden] { display:none!important; }
-    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:83px; font-size:12px; padding:12px 5px; } .choices.ko { grid-template-columns:1fr 1fr; } h1 { font-size:17px; } }
+    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } h1 { font-size:17px; } }
   </style>
 </head>
 <body>
@@ -54,56 +59,142 @@
   <main>
     <div class="panel">
       <section class="section">
-        <h2 class="step">01 — SELEZIONA CATEGORIA</h2>
-        <div class="choices" id="categories">
+        <h2 class="step">01 — SELEZIONA OPERATORE</h2>
+        <div class="choices" id="operators">
+          <button type="button" class="choice operator-choice" data-operator="Daniele">👤 Daniele</button>
+          <button type="button" class="choice operator-choice" data-operator="Armando">👤 Armando</button>
+          <button type="button" class="choice operator-choice" data-operator="Claudio">👤 Claudio</button>
+        </div>
+      </section>
+      <section class="section" id="categorySection" hidden>
+        <h2 class="step">02 — SELEZIONA CATEGORIA</h2>
+        <div class="choices categories" id="categories">
           <button type="button" class="choice" data-category="FIRMA"><span class="choice-icon" aria-hidden="true">✍️📄</span>FIRMA</button>
           <button type="button" class="choice" data-category="PROMEMORIA"><span class="choice-icon" aria-hidden="true">⚠️📄</span>PROMEMORIA</button>
           <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
+          <button type="button" class="choice" data-category="DOMANDE"><span class="choice-icon" aria-hidden="true">🤔❓</span>DOMANDE</button>
         </div>
       </section>
       <section class="section" id="secondSection" hidden>
-        <div class="sectionhead"><h2 class="step" id="secondHeading">02 — SELEZIONA FORNITORE</h2><button type="button" class="reset" id="reset">↻ Ricomincia</button></div>
+        <div class="sectionhead"><h2 class="step" id="secondHeading">03 — SELEZIONA FORNITORE</h2><button type="button" class="reset" id="reset">↻ Ricomincia</button></div>
         <div class="choices" id="options"></div>
       </section>
       <section class="section" id="messagesSection" hidden>
-        <h2 class="step">03 — MESSAGGI DISPONIBILI</h2>
+        <h2 class="step">04 — MESSAGGI DISPONIBILI</h2>
         <div id="messages"></div>
       </section>
-      <div class="intro" id="intro">Seleziona una categoria per visualizzare le opzioni disponibili.</div>
+      <div class="intro" id="intro">Seleziona il tuo nome per iniziare.</div>
     </div>
-    <p class="note">ENEL e PLENITUDE (FIRMA): testi forniti dal team. Gli altri 13 messaggi sono bozze dimostrative da verificare prima dell'uso operativo. Non inserire dati personali o riservati direttamente nel codice pubblico.</p>
+    <p class="note">I testi non ancora forniti rimangono vuoti. Verificare sempre i contenuti prima dell’invio, in particolare quelli con riferimenti a date o normative. Non inserire dati personali o riservati nel codice pubblico.</p>
   </main>
   <script>
-    // MODIFICA QUI i testi: ogni voce ha un titolo e un testo copiabile.
+    // TESTI: modificare qui i messaggi. I campi non forniti sono intenzionalmente vuoti.
     const catalogo = {
-      FIRMA: {
-        ENEL: [{ titolo: "Firma digitale — testo definitivo", testo: "Gentile cliente, \n\nPiacere, sono Armando di Billding per la gestione del cambio fornitore per le sue utenze.\nLa prego di confermarmi di aver letto questo messaggio. \n\nHo avviato la pratica con ENEL, che le invierà a breve una mail di presa in carico della richiesta.\n\nRiceverà in seguito una mail da FIRMARE DIGITALMENTE per COMPLETARE l'operazione. \nDovrà aprirla e verificarla inserendo un'OTP che le sarà inviato tramite SMS. \nSi aprirà una pagina con in fondo un questionario in cui indicare la prima opzione \"Ho incontrato il consulente di persona senza precedente telefonata\". ⬅️\n\nE' indispensabile questa procedura per completare la richiesta. \nQualora non ricevesse l'email con OTP entro 2 giorni, cerchi nello spam, e mi avverta tempestivamente.\n\nCordiali saluti\n\nArmando\nTeam Billding" }],
-        PLENITUDE: [{ titolo: "Firma digitale — testo definitivo", testo: "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding" }],
-        ILLUMIA: [{ titolo: 'Invio link firma', testo: 'Ciao [NOME], per procedere con la richiesta Illumia è necessario completare la firma della documentazione ricevuta. Grazie!' }]
-      },
-      PROMEMORIA: {
-        ENEL: [
-          { titolo: 'Primo promemoria', testo: 'Ciao [NOME], ti ricordiamo che la firma della documentazione ENEL risulta ancora da completare. Grazie!' },
-          { titolo: 'Secondo promemoria', testo: 'Ciao [NOME], ti contattiamo nuovamente perché la documentazione ENEL risulta ancora in attesa di firma. Ti invitiamo a completarla appena possibile.' }
-        ],
-        PLENITUDE: [
-          { titolo: 'Primo promemoria', testo: 'Ciao [NOME], ti ricordiamo di completare la procedura relativa alla tua richiesta Plenitude. Grazie!' },
-          { titolo: 'Secondo promemoria', testo: 'Ciao [NOME], la tua richiesta Plenitude risulta ancora in attesa del completamento della procedura. Ti chiediamo gentilmente di verificare.' }
-        ],
-        ILLUMIA: [
-          { titolo: 'Primo promemoria', testo: 'Ciao [NOME], ti ricordiamo di completare la documentazione relativa alla richiesta Illumia. Grazie!' },
-          { titolo: 'Secondo promemoria', testo: 'Ciao [NOME], ti ricontattiamo in merito alla richiesta Illumia ancora in attesa di completamento. Grazie!' }
-        ]
-      },
-      KO: {
-        'IBAN NON INTESTATO': [{ titolo: 'Richiesta IBAN intestato', testo: 'Ciao [NOME], per procedere con la richiesta è necessario fornire un IBAN correttamente intestato al titolare della fornitura.' }],
-        'IBAN RICHIESTO': [{ titolo: 'Richiesta IBAN', testo: 'Ciao [NOME], per completare la pratica abbiamo bisogno che ci comunichi un IBAN valido.' }],
-        'IBAN INESISTENTE': [{ titolo: 'Coordinate bancarie non valide', testo: 'Ciao [NOME], l’IBAN comunicato non risulta valido. Ti chiediamo gentilmente di verificare le coordinate e inviarci quelle corrette.' }],
-        'IBAN PREPAGATA': [{ titolo: 'Verifica conto di pagamento', testo: 'Ciao [NOME], il metodo di pagamento inserito richiede un’ulteriore verifica. Ti chiediamo di fornirci un IBAN alternativo idoneo all’addebito.' }],
-        'KO CREDITIZIO': [{ titolo: 'Verifica creditizia', testo: 'Ciao [NOME], la richiesta non ha superato le verifiche previste dal fornitore. Ti contatteremo per valutare eventuali alternative.' }],
-        'KO INTESTAZIONE': [{ titolo: 'Verifica intestazione', testo: 'Ciao [NOME], è emersa una discrepanza nei dati di intestazione. Ti chiediamo di verificare i dati comunicati per permetterci di procedere.' }]
+  "FIRMA": {
+    "ENEL": [
+      {
+        "titolo": "Firma digitale",
+        "testo": "Gentile cliente, \n\nPiacere, sono Armando di Billding per la gestione del cambio fornitore per le sue utenze.\nLa prego di confermarmi di aver letto questo messaggio. \n\nHo avviato la pratica con ENEL, che le invierà a breve una mail di presa in carico della richiesta.\n\nRiceverà in seguito una mail da FIRMARE DIGITALMENTE per COMPLETARE l'operazione. \nDovrà aprirla e verificarla inserendo un'OTP che le sarà inviato tramite SMS. \nSi aprirà una pagina con in fondo un questionario in cui indicare la prima opzione \"Ho incontrato il consulente di persona senza precedente telefonata\". ⬅️\n\nE' indispensabile questa procedura per completare la richiesta. \nQualora non ricevesse l'email con OTP entro 2 giorni, cerchi nello spam, e mi avverta tempestivamente.\n\nCordiali saluti\n\nArmando\nTeam Billding"
       }
-    };
+    ],
+    "PLENITUDE": [
+      {
+        "titolo": "Firma digitale",
+        "testo": "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding"
+      }
+    ],
+    "ILLUMIA": [
+      {
+        "titolo": "Firma digitale",
+        "testo": ""
+      }
+    ]
+  },
+  "PROMEMORIA": {
+    "ENEL": [
+      {
+        "titolo": "Primo promemoria",
+        "testo": ""
+      },
+      {
+        "titolo": "Secondo promemoria",
+        "testo": ""
+      }
+    ],
+    "PLENITUDE": [
+      {
+        "titolo": "Primo promemoria",
+        "testo": ""
+      },
+      {
+        "titolo": "Secondo promemoria",
+        "testo": ""
+      }
+    ],
+    "ILLUMIA": [
+      {
+        "titolo": "Primo promemoria",
+        "testo": ""
+      },
+      {
+        "titolo": "Secondo promemoria",
+        "testo": ""
+      }
+    ]
+  },
+  "KO": {
+    "IBAN NON INTESTATO": [
+      {
+        "titolo": "IBAN NON INTESTATO",
+        "testo": ""
+      }
+    ],
+    "IBAN RICHIESTO": [
+      {
+        "titolo": "IBAN RICHIESTO",
+        "testo": ""
+      }
+    ],
+    "IBAN INESISTENTE": [
+      {
+        "titolo": "IBAN INESISTENTE",
+        "testo": ""
+      }
+    ],
+    "IBAN PREPAGATA": [
+      {
+        "titolo": "IBAN PREPAGATA",
+        "testo": ""
+      }
+    ],
+    "KO CREDITIZIO": [
+      {
+        "titolo": "KO CREDITIZIO",
+        "testo": ""
+      }
+    ],
+    "KO INTESTAZIONE": [
+      {
+        "titolo": "KO INTESTAZIONE",
+        "testo": ""
+      }
+    ]
+  },
+  "DOMANDE": {
+    "Quando si attiverà la mia fornitura? (LUCE 24h)": [
+      {
+        "titolo": "Attivazione LUCE in 24 ore",
+        "testo": "I tempi canonici sono 45 giorni (1° giorno del secondo mese); tuttavia proprio in queste settimane ARERA sta effettuando dei cambiamenti storici nelle tempistiche di attivazione dell'utenza LUCE.\n\nDal 1° dicembre entrerà in vigore l'attivazione in 24 ore. Probabilmente la sua pratica rientrerà in questa categoria, e potrebbe attivarsi già i primi di dicembre.\n\nInvieranno comunque una comunicazione il giorno  dell'attivazione; in alternativa suggerisco di registrarsi all'area personale del fornitore."
+      }
+    ],
+    "Quando si attiverà la mia fornitura? (generica 45 giorni)": [
+      {
+        "titolo": "Attivazione generica — 45 giorni",
+        "testo": ""
+      }
+    ]
+  }
+};
 
     // Loghi fornitori forniti da Billding. In caso di errore rimane visibile il nome.
     const loghi = {
@@ -112,13 +203,27 @@
       ILLUMIA: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/illumia/logo+illumia.svg'
     };
 
-    const state = { category: null, option: null };
+    const state = { operator: null, category: null, option: null };
+    const operatorButtons = [...document.querySelectorAll('[data-operator]')];
     const categoryButtons = [...document.querySelectorAll('[data-category]')];
+    const categorySection = document.getElementById('categorySection');
     const options = document.getElementById('options');
     const messages = document.getElementById('messages');
     const secondSection = document.getElementById('secondSection');
     const messagesSection = document.getElementById('messagesSection');
     const intro = document.getElementById('intro');
+
+    function chooseOperator(operator) {
+      state.operator = operator;
+      operatorButtons.forEach(button => {
+        const active = button.dataset.operator === operator;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+      categorySection.hidden = false;
+      intro.hidden = true;
+      if (state.category && state.option) chooseOption(state.option); // aggiorna nome nei messaggi
+    }
 
     function chooseCategory(category) {
       state.category = category;
@@ -130,13 +235,15 @@
       });
       options.replaceChildren();
       options.classList.toggle('ko', category === 'KO');
-      document.getElementById('secondHeading').textContent = category === 'KO' ? '02 — SELEZIONA TIPOLOGIA KO' : '02 — SELEZIONA FORNITORE';
+      options.classList.toggle('questions', category === 'DOMANDE');
+      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', FIRMA:'FORNITORE', PROMEMORIA:'FORNITORE' };
+      document.getElementById('secondHeading').textContent = '03 — SELEZIONA ' + labels[category];
       for (const name of Object.keys(catalogo[category])) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
         button.dataset.option = name;
-        if (category !== 'KO' && loghi[name]) {
+        if ((category === 'FIRMA' || category === 'PROMEMORIA') && loghi[name]) {
           button.classList.add('supplier-choice');
           const logo = document.createElement('img');
           logo.className = 'supplier-logo';
@@ -147,7 +254,7 @@
           const label = document.createElement('span');
           label.className = 'supplier-label';
           label.textContent = name;
-          button.append(logo, label);
+          button.append(logo,label);
         } else {
           button.textContent = name;
         }
@@ -159,11 +266,17 @@
       intro.hidden = true;
     }
 
+    // Personalizza sia la presentazione che la firma, senza modificare il testo originale salvato.
+    function testoPerOperatore(testo) {
+      if (!testo) return '';
+      return testo.replace(/\b(Daniele|Armando)\b/g, state.operator);
+    }
+
     function chooseOption(option) {
       state.option = option;
       for (const button of options.children) {
         const active = button.dataset.option === option;
-        button.classList.toggle('active', active);
+        button.classList.toggle('active',active);
         button.setAttribute('aria-pressed', String(active));
       }
       messages.replaceChildren();
@@ -172,48 +285,60 @@
         card.className = 'message';
         const title = document.createElement('h3');
         title.textContent = item.titolo;
-        const body = document.createElement('p');
-        body.textContent = item.testo;
-        const actions = document.createElement('div');
-        actions.className = 'actions';
-        const copy = document.createElement('button');
-        copy.type = 'button';
-        copy.className = 'copy';
-        copy.textContent = '▣ Copia messaggio';
-        copy.addEventListener('click', async () => {
-          try {
-            if (navigator.clipboard && window.isSecureContext) {
-              await navigator.clipboard.writeText(item.testo);
-            } else {
-              const selection = document.createElement('textarea');
-              selection.value = item.testo;
-              selection.style.position = 'fixed';
-              selection.style.opacity = '0';
-              document.body.appendChild(selection);
-              selection.select();
-              const ok = document.execCommand('copy');
-              selection.remove();
-              if (!ok) throw new Error('Copia non consentita');
+        const testo = testoPerOperatore(item.testo);
+        if (testo) {
+          const body = document.createElement('p');
+          body.textContent = testo;
+          const actions = document.createElement('div');
+          actions.className = 'actions';
+          const copy = document.createElement('button');
+          copy.type = 'button';
+          copy.className = 'copy';
+          copy.textContent = '📋 Copia messaggio';
+          copy.addEventListener('click', async () => {
+            try {
+              if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(testo);
+              } else {
+                const selection = document.createElement('textarea');
+                selection.value = testo;
+                selection.style.position = 'fixed';
+                selection.style.opacity = '0';
+                document.body.appendChild(selection);
+                selection.select();
+                const ok = document.execCommand('copy');
+                selection.remove();
+                if (!ok) throw new Error('Copia non consentita');
+              }
+              copy.textContent = '✅ Copiato!';
+              copy.classList.add('copied');
+            } catch (err) {
+              copy.textContent = 'Copia non riuscita';
+              console.error(err);
             }
-            copy.textContent = '✓ Copiato!';
-            copy.classList.add('copied');
-          } catch (err) {
-            copy.textContent = 'Copia non riuscita';
-            console.error(err);
-          }
-        });
-        actions.appendChild(copy);
-        card.append(title, body, actions);
+          });
+          actions.appendChild(copy);
+          card.append(title,body,actions);
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'empty';
+          empty.textContent = 'Messaggio non ancora inserito.';
+          card.append(title,empty);
+        }
         messages.appendChild(card);
       }
       messagesSection.hidden = false;
     }
 
+    operatorButtons.forEach(button => button.addEventListener('click', () => chooseOperator(button.dataset.operator)));
     categoryButtons.forEach(button => button.addEventListener('click', () => chooseCategory(button.dataset.category)));
     document.getElementById('reset').addEventListener('click', () => {
+      state.operator = null;
       state.category = null;
       state.option = null;
+      operatorButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
       categoryButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
+      categorySection.hidden = true;
       secondSection.hidden = true;
       messagesSection.hidden = true;
       intro.hidden = false;
