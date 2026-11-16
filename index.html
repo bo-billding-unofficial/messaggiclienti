@@ -38,6 +38,7 @@
     .supplier-choice.logo-failed .supplier-logo { display:none; }
     .supplier-choice.logo-failed .supplier-label { font-size:18px; }
 
+    .choices.subchoices { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .sectionhead { display:flex; justify-content:space-between; align-items:center; gap:12px; }
     .reset { border:0; background:transparent; padding:7px; color:#64748b; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
     .reset:hover { color:#1657a5; }
@@ -52,7 +53,7 @@
     .intro { color:#8491a2; text-align:center; padding:38px 8px; font-size:14px; }
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
     [hidden] { display:none!important; }
-    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } h1 { font-size:17px; } }
+    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } .choices.subchoices { grid-template-columns:1fr; } h1 { font-size:17px; } }
   </style>
 </head>
 <body>
@@ -81,8 +82,12 @@
         <div class="sectionhead"><h2 class="step" id="secondHeading">03 — SELEZIONA FORNITORE</h2><button type="button" class="reset" id="reset">↻ Ricomincia</button></div>
         <div class="choices" id="options"></div>
       </section>
+      <section class="section" id="suboptionSection" hidden>
+        <h2 class="step">04 — SELEZIONA SOLUZIONE</h2>
+        <div class="choices subchoices" id="suboptions"></div>
+      </section>
       <section class="section" id="messagesSection" hidden>
-        <h2 class="step">04 — MESSAGGI DISPONIBILI</h2>
+        <h2 class="step" id="messagesHeading">04 — MESSAGGI DISPONIBILI</h2>
         <div id="messages"></div>
       </section>
       <div class="intro" id="intro">Seleziona il tuo nome per iniziare.</div>
@@ -145,12 +150,20 @@
     ]
   },
   "KO": {
-    "IBAN NON INTESTATO": [
-      {
-        "titolo": "IBAN NON INTESTATO",
-        "testo": ""
-      }
-    ],
+    "IBAN NON INTESTATO": {
+      "Risolvibile con dati terzi": [
+        {
+          "titolo": "Risolvibile con dati terzi",
+          "testo": "Buongiorno,\n\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\n\nPer completare la procedura il fornitore richiede anche NOME, COGNOME e CODICE FISCALE dell'intestatario dell'IBAN.\n\nLe chiedo gentilmente di fornirmi i dati qui in chat.\n\nGrazie mille."
+        }
+      ],
+      "KO serve IBAN dell'intestatario": [
+        {
+          "titolo": "KO serve IBAN dell'intestatario",
+          "testo": "Buongiorno,\npiacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore.\n\nDa una verifica, risulta che l'IBAN fornito non è associato al suo codice fiscale.\nPer completare la procedura il fornitore richiede un'IBAN intestato all'INTESTATARIO dell'utenza\n\nLe chiedo gentilmente se può fornirmi un IBAN suo, per mandare avanti la pratica.\n\nGrazie mille."
+        }
+      ]
+    },
     "IBAN RICHIESTO": [
       {
         "titolo": "IBAN RICHIESTO",
@@ -180,22 +193,34 @@
         "titolo": "KO INTESTAZIONE",
         "testo": ""
       }
+    ],
+    "C.I. fotografata per ENEL": [
+      {
+        "titolo": "C.I. fotografata per ENEL",
+        "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore con Enel.\n\nPer completare la procedura Enel richiede copia del documento di identità con determinati requisiti:\n1) documento nella sua interezza\n2) no fotocopia o scansione\n\nSfortunatamente il documento che ci ha fornito non rispecchia requisiti per cui avrei bisogno che mi re-inviasse foto del fronte e del retro del documento di identità.\nPuò inviare qui in questa chat.\n\nGrazie mille."
+      }
+    ],
+    "C.I. mancante / illeggibile": [
+      {
+        "titolo": "C.I. mancante / illeggibile",
+        "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di voltura/subentro.\n\nPer completare la procedura il fornitore richiede il documento di identità.\n\nLe chiedo gentilmente di inviarmelo qui in chat.\n\nGrazie mille."
+      }
     ]
   },
   "CHIUSURA CONVERSAZIONE": {
     "Resto a disposizione": [
-        {
-            "titolo": "Resto a disposizione",
-            "testo": "Benissimo.\nRimango a disposizione per qualsiasi ulteriore chiarimento o necessità.\nLe auguro una buona giornata.\nDaniele\n_Team Billding_"
-        }
+      {
+        "titolo": "Resto a disposizione",
+        "testo": "Benissimo.\nRimango a disposizione per qualsiasi ulteriore chiarimento o necessità.\nLe auguro una buona giornata.\nDaniele\n_Team Billding_"
+      }
     ],
     "Invito recensione": [
-        {
-            "titolo": "Invito recensione",
-            "testo": "A questo punto, le chiedo un piccolissimo favore! 😁\nSe può farmi una brevissima recensione, menzionandomi \"Daniele\" se ha apprezzato il servizio e il supporto!\nBasta una riga, e ci aiuterebbe molto a crescere. Le lascio il link! Grazie in anticipo!\n\nhttps://it.trustpilot.com/evaluate/billding.it"
-        }
+      {
+        "titolo": "Invito recensione",
+        "testo": "A questo punto, le chiedo un piccolissimo favore! 😁\nSe può farmi una brevissima recensione, menzionandomi \"Daniele\" se ha apprezzato il servizio e il supporto!\nBasta una riga, e ci aiuterebbe molto a crescere. Le lascio il link! Grazie in anticipo!\n\nhttps://it.trustpilot.com/evaluate/billding.it"
+      }
     ]
-},
+  },
   "DOMANDE": {
     "Quando si attiverà la mia fornitura? (LUCE 24h)": [
       {
@@ -219,7 +244,7 @@
       ILLUMIA: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/illumia/logo+illumia.svg'
     };
 
-    const state = { operator: null, category: null, option: null };
+    const state = { operator: null, category: null, option: null, suboption: null };
     const operatorButtons = [...document.querySelectorAll('[data-operator]')];
     const categoryButtons = [...document.querySelectorAll('[data-category]')];
     const categorySection = document.getElementById('categorySection');
@@ -227,6 +252,9 @@
     const messages = document.getElementById('messages');
     const secondSection = document.getElementById('secondSection');
     const messagesSection = document.getElementById('messagesSection');
+    const suboptionSection = document.getElementById('suboptionSection');
+    const suboptions = document.getElementById('suboptions');
+    const messagesHeading = document.getElementById('messagesHeading');
     const intro = document.getElementById('intro');
 
     function chooseOperator(operator) {
@@ -238,12 +266,17 @@
       });
       categorySection.hidden = false;
       intro.hidden = true;
-      if (state.category && state.option) chooseOption(state.option); // aggiorna nome nei messaggi
+      if (state.category && state.option) {
+        if (state.suboption) renderMessages(catalogo[state.category][state.option][state.suboption]);
+        else chooseOption(state.option);
+      } // aggiorna nome nei messaggi
     }
 
     function chooseCategory(category) {
       state.category = category;
       state.option = null;
+      state.suboption = null;
+      suboptionSection.hidden = true;
       categoryButtons.forEach(button => {
         const active = button.dataset.category === category;
         button.classList.toggle('active', active);
@@ -279,6 +312,7 @@
       }
       secondSection.hidden = false;
       messagesSection.hidden = true;
+      suboptionSection.hidden = true;
       intro.hidden = true;
     }
 
@@ -290,13 +324,45 @@
 
     function chooseOption(option) {
       state.option = option;
+      state.suboption = null;
       for (const button of options.children) {
         const active = button.dataset.option === option;
         button.classList.toggle('active',active);
         button.setAttribute('aria-pressed', String(active));
       }
+      const entry = catalogo[state.category][option];
+      if (!Array.isArray(entry)) {
+        // Un livello aggiuntivo solo per IBAN NON INTESTATO.
+        suboptions.replaceChildren();
+        for (const name of Object.keys(entry)) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'choice';
+          button.textContent = name;
+          button.dataset.suboption = name;
+          button.addEventListener('click', () => {
+            state.suboption = name;
+            for (const other of suboptions.children) {
+              const active = other.dataset.suboption === name;
+              other.classList.toggle('active', active);
+              other.setAttribute('aria-pressed', String(active));
+            }
+            renderMessages(entry[name]);
+          });
+          suboptions.appendChild(button);
+        }
+        suboptionSection.hidden = false;
+        messagesSection.hidden = true;
+      } else {
+        suboptionSection.hidden = true;
+        renderMessages(entry);
+      }
+    }
+
+    function renderMessages(items) {
+      messagesHeading.textContent = (state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
       messages.replaceChildren();
-      for (const item of catalogo[state.category][option]) {
+      for (const item of items) {
         const card = document.createElement('article');
         card.className = 'message';
         const title = document.createElement('h3');
@@ -352,6 +418,8 @@
       state.operator = null;
       state.category = null;
       state.option = null;
+      state.suboption = null;
+      suboptionSection.hidden = true;
       operatorButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
       categoryButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
       categorySection.hidden = true;
