@@ -108,12 +108,20 @@
         "testo": "Gentile cliente, \n\nPiacere, sono Armando di Billding per la gestione del cambio fornitore per le sue utenze.\nLa prego di confermarmi di aver letto questo messaggio. \n\nHo avviato la pratica con ENEL, che le invierà a breve una mail di presa in carico della richiesta.\n\nRiceverà in seguito una mail da FIRMARE DIGITALMENTE per COMPLETARE l'operazione. \nDovrà aprirla e verificarla inserendo un'OTP che le sarà inviato tramite SMS. \nSi aprirà una pagina con in fondo un questionario in cui indicare la prima opzione \"Ho incontrato il consulente di persona senza precedente telefonata\". ⬅️\n\nE' indispensabile questa procedura per completare la richiesta. \nQualora non ricevesse l'email con OTP entro 2 giorni, cerchi nello spam, e mi avverta tempestivamente.\n\nCordiali saluti\n\nArmando\nTeam Billding"
       }
     ],
-    "PLENITUDE": [
-      {
-        "titolo": "Firma digitale",
-        "testo": "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding"
-      }
-    ],
+    "PLENITUDE": {
+      "1° FIRMA": [
+        {
+          "titolo": "1° FIRMA",
+          "testo": "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding"
+        }
+      ],
+      "SPIEGAZIONE DETTAGLIATA": [
+        {
+          "titolo": "SPIEGAZIONE DETTAGLIATA",
+          "testo": "Una volta aperto il link, troverà la pagina con i consensi obbligatori e quelli facoltativi.\n\nSi assicuri di aver spuntato i due consensi obblgatori.\n\nIn fondo troverà due pdf e il tasto di conferma. Quest'ultimo tasto si abilita solo se il sistema rileva che è stato scaricato/aperto il pdf. \n\nNon occorre compilarlo, ma solo cliccarci / scaricarlo o aprirlo.\n\nSe ha fatto tutte queste azioni con cura, e comunque non si abilita la conferma, allora potrebbe essere un bug.\n\nPossiamo provare o con REINVIO di sms / mail, oppure me lo inoltra e provo a dare io conferma da un dispositivo diverso."
+        }
+      ]
+    },
     "ILLUMIA": [
       {
         "titolo": "Firma digitale",
@@ -382,7 +390,7 @@
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : '04 — SELEZIONA SOLUZIONE';
+        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : '04 — SELEZIONA SOLUZIONE';
         makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
         messagesSection.hidden = true;
