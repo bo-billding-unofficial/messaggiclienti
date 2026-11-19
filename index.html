@@ -208,12 +208,20 @@
         "testo": ""
       }
     ],
-    "C.I. fotografata per ENEL": [
-      {
-        "titolo": "C.I. fotografata per ENEL",
-        "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore con Enel.\n\nPer completare la procedura Enel richiede copia del documento di identità con determinati requisiti:\n1) documento nella sua interezza\n2) no fotocopia o scansione\n\nSfortunatamente il documento che ci ha fornito non rispecchia requisiti per cui avrei bisogno che mi re-inviasse foto del fronte e del retro del documento di identità.\nPuò inviare qui in questa chat.\n\nGrazie mille."
-      }
-    ],
+    "C.I. fotografata per ENEL": {
+      "Richiesta CI intera": [
+        {
+          "titolo": "Richiesta CI intera",
+          "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore con Enel.\n\nPer completare la procedura Enel richiede copia del documento di identità con determinati requisiti:\n1) documento nella sua interezza\n2) no fotocopia o scansione\n\nSfortunatamente il documento che ci ha fornito non rispecchia requisiti per cui avrei bisogno che mi re-inviasse foto del fronte e del retro del documento di identità.\nPuò inviare qui in questa chat.\n\nGrazie mille."
+        }
+      ],
+      "Purtroppo Enel non accetta...": [
+        {
+          "titolo": "Purtroppo Enel non accetta...",
+          "testo": "Purtroppo Enel non accetta scansioni o immagini ritagliate da un PDF, anche se il documento risulta perfettamente leggibile.\n\nPer completare la verifica, il fornitore richiede necessariamente una fotografia originale del documento* con tutti e quattro i bordi ben visibili.\n\nSe non ha a disposizione la carta d'identità, possiamo utilizzare in alternativa una fotografia della patente di guida, o passaporto, purché valido e fotografato direttamente.\n\nSi tratta di un requisito imposto da Enel per la verifica dell'identità, senza il quale non ci è possibile completare la trasmissione della pratica.\n\nRiesce gentilmente a inviarci una nuova fotografia di uno dei due documenti?\n\nLa ringrazio per la collaborazione!"
+        }
+      ]
+    },
     "C.I. mancante / illeggibile": [
       {
         "titolo": "C.I. mancante / illeggibile",
@@ -390,7 +398,7 @@
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : '04 — SELEZIONA SOLUZIONE';
+        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'C.I. fotografata per ENEL' ? '04 — SELEZIONA MESSAGGIO DOCUMENTO' : '04 — SELEZIONA SOLUZIONE';
         makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
         messagesSection.hidden = true;
