@@ -39,6 +39,8 @@
     .supplier-choice.logo-failed .supplier-label { font-size:18px; }
 
     .choices.subchoices { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .choices.subchoices.credit-providers { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .credit-providers .choice { min-height:74px; }
     .sectionhead { display:flex; justify-content:space-between; align-items:center; gap:12px; }
     .reset { border:0; background:transparent; padding:7px; color:#64748b; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
     .reset:hover { color:#1657a5; }
@@ -53,7 +55,7 @@
     .intro { color:#8491a2; text-align:center; padding:38px 8px; font-size:14px; }
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
     [hidden] { display:none!important; }
-    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } .choices.subchoices { grid-template-columns:1fr; } h1 { font-size:17px; } }
+    @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } .choices.subchoices { grid-template-columns:1fr; } .choices.subchoices.credit-providers { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:17px; } }
   </style>
 </head>
 <body>
@@ -196,12 +198,120 @@
         }
       ]
     },
-    "KO CREDITIZIO": [
-      {
-        "titolo": "KO CREDITIZIO",
-        "testo": ""
+    "KO CREDITIZIO": {
+      "A2A": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "DUFERCO": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "ENEL": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "EON": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "ILLUMIA": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "NEN": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "OCTOPUS": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
+      },
+      "PLENITUDE": {
+        "riproposta": [
+          {
+            "titolo": "Riproposta",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nDesiderando comunque portare a compimento un cambio che le garantisca il risparmio preventivato, le vorrei proporre delle soluzioni alternative, con condizioni economiche altrettanto vantaggiose, in grado di accogliere la sua richiesta.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ],
+        "perso": [
+          {
+            "titolo": "Perso",
+            "testo": "Buongiorno, piacere sono Daniele del Servizio Clienti di Billding.\n\nLa ricontatto in merito alla sua richiesta di cambio fornitore avviata qualche giorno fa con ##NOME FORNITORE SCELTO#. \n\nPurtroppo, a seguito di verifiche di natura creditizia, ###FORNITORE### ci ha comunicato di non poter procedere con il cambio. Non mi è possibile verificare nel dettaglio la motivazione: tipicamente sono effettuate consultazioni di banche dati, registro TIMOE o verifiche su precedenti contenziosi avuti con società terze.\n\nResto a disposizione per fornirle tutti i dettagli.\n\nCordiali saluti,\n\nDaniele"
+          }
+        ]
       }
-    ],
+    },
     "KO INTESTAZIONE": [
       {
         "titolo": "KO INTESTAZIONE",
@@ -254,6 +364,12 @@
       {
         "titolo": "Attivazione generica — 45 giorni",
         "testo": ""
+      }
+    ],
+    "Numero errato": [
+      {
+        "titolo": "Numero errato",
+        "testo": "Buongiorno, \n\nper quanto riguarda il numero di telefono, le confermo che è stato intenzionalmente modificato a tua tutela per la sola fase di avvio della pratica.\n\nLa motivazione di tale scelta, nel suo esclusivo interesse, è di impedire a call center truffa di raggiungerla qualora ci siano fughe o cessioni di dati illecite dai sistemi online durante la fase di passaggio a PLENITUDE. Abbiamo ricevuto numerose segnalazioni e la priorità per noi è preservare l'esperienza del cliente senza che venga assillato dai call center. \n\nIl numero è facilmente modificabile dall'area personale, e si può correggere in un secondo momento, se serve col nostro supporto.\n\nSpero di aver chiarito i dubbi e rimango a disposizione per qualsiasi esigenza."
       }
     ]
   }
@@ -348,7 +464,12 @@
     // Personalizza sia la presentazione che la firma, senza modificare il testo originale salvato.
     function testoPerOperatore(testo) {
       if (!testo) return '';
-      return testo.replace(/\b(Daniele|Armando)\b/g, state.operator);
+      let risultato = testo.replace(/\b(Daniele|Armando|Claudio)\b/g, state.operator);
+      if (state.category === 'KO' && state.option === 'KO CREDITIZIO' && state.suboption) {
+        risultato = risultato.replaceAll('##NOME FORNITORE SCELTO#', state.suboption)
+          .replaceAll('###FORNITORE###', state.suboption);
+      }
+      return risultato;
     }
 
     function makeOptionButtons(container, entry, depth) {
@@ -372,7 +493,7 @@
             const next = entry[name];
             if (Array.isArray(next)) renderMessages(next);
             else {
-              thirdSection.querySelector('.step').textContent = '05 — SELEZIONA SOLUZIONE';
+              thirdSection.querySelector('.step').textContent = state.category === 'KO' && state.option === 'KO CREDITIZIO' ? '05 — SELEZIONA ESITO' : '05 — SELEZIONA SOLUZIONE';
               makeOptionButtons(thirdoptions, next, 2);
               thirdSection.hidden = false;
               messagesSection.hidden = true;
@@ -398,7 +519,8 @@
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'C.I. fotografata per ENEL' ? '04 — SELEZIONA MESSAGGIO DOCUMENTO' : '04 — SELEZIONA SOLUZIONE';
+        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'KO CREDITIZIO' ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'C.I. fotografata per ENEL' ? '04 — SELEZIONA MESSAGGIO DOCUMENTO' : '04 — SELEZIONA SOLUZIONE';
+        suboptions.classList.toggle('credit-providers', state.category === 'KO' && option === 'KO CREDITIZIO');
         makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
         messagesSection.hidden = true;
