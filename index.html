@@ -92,6 +92,10 @@
         <h2 class="step">05 — SELEZIONA SOLUZIONE</h2>
         <div class="choices subchoices" id="thirdoptions"></div>
       </section>
+      <section class="section" id="fourthSection" hidden>
+        <h2 class="step">06 — SELEZIONA MESSAGGIO DOCUMENTO</h2>
+        <div class="choices subchoices" id="fourthoptions"></div>
+      </section>
       <section class="section" id="messagesSection" hidden>
         <h2 class="step" id="messagesHeading">04 — MESSAGGI DISPONIBILI</h2>
         <div id="messages"></div>
@@ -164,6 +168,28 @@
     ]
   },
   "KO": {
+    "CARTA IDENTITÀ": {
+      "C.I. fotografata per ENEL": {
+        "Richiesta CI intera": [
+          {
+            "titolo": "Richiesta CI intera",
+            "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore con Enel.\n\nPer completare la procedura Enel richiede copia del documento di identità con determinati requisiti:\n1) documento nella sua interezza\n2) no fotocopia o scansione\n\nSfortunatamente il documento che ci ha fornito non rispecchia requisiti per cui avrei bisogno che mi re-inviasse foto del fronte e del retro del documento di identità.\nPuò inviare qui in questa chat.\n\nGrazie mille."
+          }
+        ],
+        "Purtroppo Enel non accetta...": [
+          {
+            "titolo": "Purtroppo Enel non accetta...",
+            "testo": "Purtroppo Enel non accetta scansioni o immagini ritagliate da un PDF, anche se il documento risulta perfettamente leggibile.\n\nPer completare la verifica, il fornitore richiede necessariamente una fotografia originale del documento* con tutti e quattro i bordi ben visibili.\n\nSe non ha a disposizione la carta d'identità, possiamo utilizzare in alternativa una fotografia della patente di guida, o passaporto, purché valido e fotografato direttamente.\n\nSi tratta di un requisito imposto da Enel per la verifica dell'identità, senza il quale non ci è possibile completare la trasmissione della pratica.\n\nRiesce gentilmente a inviarci una nuova fotografia di uno dei due documenti?\n\nLa ringrazio per la collaborazione!"
+          }
+        ]
+      },
+      "C.I. mancante / illeggibile": [
+        {
+          "titolo": "C.I. mancante / illeggibile",
+          "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di voltura/subentro.\n\nPer completare la procedura il fornitore richiede il documento di identità.\n\nLe chiedo gentilmente di inviarmelo qui in chat.\n\nGrazie mille."
+        }
+      ]
+    },
     "IBAN": {
       "IBAN NON INTESTATO": {
         "Risolvibile con dati terzi": [
@@ -318,26 +344,20 @@
         "testo": ""
       }
     ],
-    "C.I. fotografata per ENEL": {
-      "Richiesta CI intera": [
+    "OFFERTA NON OTTIMALE": {
+      "RICHIESTA BOLLETTA PER CONFRONTO": [
         {
-          "titolo": "Richiesta CI intera",
-          "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di cambio fornitore con Enel.\n\nPer completare la procedura Enel richiede copia del documento di identità con determinati requisiti:\n1) documento nella sua interezza\n2) no fotocopia o scansione\n\nSfortunatamente il documento che ci ha fornito non rispecchia requisiti per cui avrei bisogno che mi re-inviasse foto del fronte e del retro del documento di identità.\nPuò inviare qui in questa chat.\n\nGrazie mille."
+          "titolo": "Richiesta bolletta per confronto",
+          "testo": "Buongiorno Marco, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua richiesta di cambio fornitore, a seguito di un'ulteriore verifica della documentazione caricata.\n\nHo riscontrato che la bolletta inserita non riporta i consumi annui della fornitura. Di conseguenza, la nostra piattaforma ha elaborato il confronto considerando un consumo pari a zero, suggerendole un'offerta ottimizzata per questo profilo, che potrebbe non essere la più conveniente in presenza di consumi superiori.\n\nPer assicurarci di proporle la soluzione economicamente più vantaggiosa, le chiederei gentilmente di inviarci una bolletta completa, dalla quale poter ricavare i consumi effettivi e verificare se sia opportuno mantenere l'offerta selezionata oppure valutarne una alternativa.\n\nLe chiederei inoltre due semplici informazioni:\n- L'immobile è utilizzato come prima o seconda casa?\n- Il gas viene utilizzato anche per il riscaldamento, oppure soltanto per acqua calda e cucina?\n\nCon queste informazioni potremo effettuare una valutazione più accurata e consigliarle la tariffa più adatta alle sue esigenze.\n\nResto a disposizione e la ringrazio per la collaborazione!\n\nDaniele\nTeam Billding"
         }
       ],
-      "Purtroppo Enel non accetta...": [
+      "SUGGERITA ALTRA OFFERTA": [
         {
-          "titolo": "Purtroppo Enel non accetta...",
-          "testo": "Purtroppo Enel non accetta scansioni o immagini ritagliate da un PDF, anche se il documento risulta perfettamente leggibile.\n\nPer completare la verifica, il fornitore richiede necessariamente una fotografia originale del documento* con tutti e quattro i bordi ben visibili.\n\nSe non ha a disposizione la carta d'identità, possiamo utilizzare in alternativa una fotografia della patente di guida, o passaporto, purché valido e fotografato direttamente.\n\nSi tratta di un requisito imposto da Enel per la verifica dell'identità, senza il quale non ci è possibile completare la trasmissione della pratica.\n\nRiesce gentilmente a inviarci una nuova fotografia di uno dei due documenti?\n\nLa ringrazio per la collaborazione!"
+          "titolo": "Suggerita altra offerta",
+          "testo": "Buongiorno Guido, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa ricontatto in merito alla sua recente richiesta di cambio fornitore con Octopus Energy.\n\nHo effettuato un'analisi più approfondita della sua bolletta e ho individuato un aspetto importante che desidero segnalarle.\n\nIn fase di lettura della documentazione, la nostra piattaforma aveva rilevato un consumo annuo di gas pari a zero, suggerendole di conseguenza l'offerta indicizzata di Octopus.\n\nDalla verifica della bolletta originale, tuttavia, emerge un consumo di gas superiore a quello inizialmente rilevato. L'offerta proposta automaticamente non risulta quindi la soluzione ottimale per il suo effettivo profilo di consumo.\n\nConsiderando inoltre gli attuali rincari del mercato energetico, vorrei proporle un'alternativa che ritengo più adatta alle sue esigenze: Eni Plenitude, con prezzo della materia prima gas bloccato a 0,75 €/Smc per 24 mesi.\n\nPer darle un riferimento, alcune offerte indicizzate possono oggi superare 1 €/metro cubo di gas, più i margini applicati dal fornitore. Avrebbe quindi un vantaggio economico significativo, oltre a rimanere protetto da ulteriori aumenti nei prossimi due anni.\n\nLa procedura prevede semplicemente che mi dia conferma: ha già il profilo attivo in Billding e non è richiesta ulteriore documentazione.\n\nCi tenevo a segnalarle questa opportunità prima di procedere, così da assicurarci che la tariffa sottoscritta fosse effettivamente la più adatta alle sue esigenze.\n\nResto a disposizione per ulteriori chiarimenti e valutare come procedere.\n\nBuona giornata!\n\nDaniele\nTeam Billding"
         }
       ]
-    },
-    "C.I. mancante / illeggibile": [
-      {
-        "titolo": "C.I. mancante / illeggibile",
-        "testo": "Buongiorno, piacere sono Armando di Billding per la lavorazione della sua richiesta di voltura/subentro.\n\nPer completare la procedura il fornitore richiede il documento di identità.\n\nLe chiedo gentilmente di inviarmelo qui in chat.\n\nGrazie mille."
-      }
-    ]
+    }
   },
   "CHIUSURA CONVERSAZIONE": {
     "Resto a disposizione": [
@@ -393,6 +413,8 @@
     const suboptionSection = document.getElementById('suboptionSection');
     const suboptions = document.getElementById('suboptions');
     const thirdSection = document.getElementById('thirdSection');
+    const fourthSection = document.getElementById('fourthSection');
+    const fourthoptions = document.getElementById('fourthoptions');
     const thirdoptions = document.getElementById('thirdoptions');
     const messagesHeading = document.getElementById('messagesHeading');
     const intro = document.getElementById('intro');
@@ -458,6 +480,7 @@
       messagesSection.hidden = true;
       suboptionSection.hidden = true;
       thirdSection.hidden = true;
+      fourthSection.hidden = true;
       intro.hidden = true;
     }
 
@@ -490,16 +513,26 @@
             state.suboption = name;
             state.thirdoption = null;
             thirdSection.hidden = true;
+            fourthSection.hidden = true;
             const next = entry[name];
             if (Array.isArray(next)) renderMessages(next);
             else {
-              thirdSection.querySelector('.step').textContent = state.category === 'KO' && state.option === 'KO CREDITIZIO' ? '05 — SELEZIONA ESITO' : '05 — SELEZIONA SOLUZIONE';
+              thirdSection.querySelector('.step').textContent = state.category === 'KO' && state.option === 'KO CREDITIZIO' ? '05 — SELEZIONA ESITO' : state.category === 'KO' && state.option === 'CARTA IDENTITÀ' ? '05 — SELEZIONA MESSAGGIO DOCUMENTO' : '05 — SELEZIONA SOLUZIONE';
               makeOptionButtons(thirdoptions, next, 2);
               thirdSection.hidden = false;
               messagesSection.hidden = true;
             }
-          } else {
+          } else if (depth === 2) {
             state.thirdoption = name;
+            fourthSection.hidden = true;
+            const next = entry[name];
+            if (Array.isArray(next)) renderMessages(next);
+            else {
+              makeOptionButtons(fourthoptions, next, 3);
+              fourthSection.hidden = false;
+              messagesSection.hidden = true;
+            }
+          } else {
             renderMessages(entry[name]);
           }
         });
@@ -512,6 +545,7 @@
       state.suboption = null;
       state.thirdoption = null;
       thirdSection.hidden = true;
+      fourthSection.hidden = true;
       for (const button of options.children) {
         const active = button.dataset.option === option;
         button.classList.toggle('active',active);
@@ -519,7 +553,7 @@
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'KO CREDITIZIO' ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'C.I. fotografata per ENEL' ? '04 — SELEZIONA MESSAGGIO DOCUMENTO' : '04 — SELEZIONA SOLUZIONE';
+        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'KO CREDITIZIO' ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'CARTA IDENTITÀ' ? '04 — SELEZIONA CASISTICA DOCUMENTO' : state.category === 'KO' && option === 'OFFERTA NON OTTIMALE' ? '04 — SELEZIONA TIPOLOGIA OFFERTA' : '04 — SELEZIONA SOLUZIONE';
         suboptions.classList.toggle('credit-providers', state.category === 'KO' && option === 'KO CREDITIZIO');
         makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
@@ -531,7 +565,7 @@
     }
 
     function renderMessages(items) {
-      messagesHeading.textContent = (state.thirdoption ? '06' : state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
+      messagesHeading.textContent = (!fourthSection.hidden ? '07' : state.thirdoption ? '06' : state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
       messages.replaceChildren();
       for (const item of items) {
         const card = document.createElement('article');
