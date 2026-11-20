@@ -55,8 +55,8 @@
     .intro { color:#8491a2; text-align:center; padding:38px 8px; font-size:14px; }
     .certificate-fields { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:16px; }
     .certificate-fields label { display:flex; flex-direction:column; gap:7px; font-size:12px; font-weight:750; color:#526176; letter-spacing:.4px; }
-    .certificate-fields input { width:100%; min-width:0; border:1px solid #cad5e3; border-radius:9px; font:inherit; font-weight:500; font-size:15px; letter-spacing:normal; padding:11px 10px; color:#1c2a3c; background:white; }
-    .certificate-fields input:focus { outline:2px solid #89b8ff; border-color:#2563bd; }
+    .certificate-fields input, .certificate-fields select { width:100%; min-width:0; border:1px solid #cad5e3; border-radius:9px; font:inherit; font-weight:500; font-size:15px; letter-spacing:normal; padding:11px 10px; color:#1c2a3c; background:white; }
+    .certificate-fields input:focus, .certificate-fields select:focus { outline:2px solid #89b8ff; border-color:#2563bd; }
     @media(max-width:800px) { .certificate-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media(max-width:450px) { .certificate-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
@@ -107,8 +107,20 @@
         <h2 class="step">04 — COMPILA I DATI</h2>
         <div class="certificate-fields">
           <label>NOME CLIENTE <input id="certCliente" type="text" maxlength="30" placeholder="Nome cliente" autocomplete="off"></label>
-          <label>AGENZIA <input id="certAgenzia" type="text" maxlength="30" placeholder="Nome agenzia" autocomplete="off"></label>
-          <label>OPERAZIONE <input id="certOperazione" type="text" maxlength="30" placeholder="Es. voltura" autocomplete="off"></label>
+          <label>AGENZIA (FACOLTATIVA)
+            <select id="certAgenzia">
+              <option value="">Nessuna agenzia</option>
+              <option value="ProfessioneCasa">ProfessioneCasa</option>
+              <option value="l'Agenzia">l'Agenzia</option>
+            </select>
+          </label>
+          <label>OPERAZIONE (OBBLIGATORIA)
+            <select id="certOperazione" required>
+              <option value="subentro">subentro</option>
+              <option value="voltura" selected>voltura</option>
+              <option value="cambio fornitore">cambio fornitore</option>
+            </select>
+          </label>
           <label>INDIRIZZO <input id="certIndirizzo" type="text" maxlength="30" placeholder="Indirizzo immobile" autocomplete="off"></label>
         </div>
         <div class="message" id="certificateMessage">
@@ -424,7 +436,7 @@
 
     // CERTIFICATO: tutti i dati rimangono soltanto nel browser, non vengono salvati.
     const certificati = {
-      'CLIENTE': `Buongiorno, 
+      'CLIENTE': `Buongiorno ###NOME_CLIENTE###,
 
 piacere sono ###OPERATORE###, del servizio clienti di Billding, in collaborazione con ###AGENZIA###. 
 
@@ -458,6 +470,10 @@ Grazie e cordiali saluti`
     function composeCertificate() {
       if (!certVersion) return '';
       let result = certificati[certVersion].replaceAll('###OPERATORE###', state.operator || 'Daniele');
+      // Agenzia facoltativa: ometti il riferimento alla collaborazione se non selezionata.
+      if (certVersion === 'CLIENTE' && !certInputs['###AGENZIA###'].value.trim()) {
+        result = result.replace(', in collaborazione con ###AGENZIA###', '');
+      }
       for (const [token, field] of Object.entries(certInputs)) {
         // Evidenzia i campi da completare nella preview, ma non altera gli altri messaggi.
         result = result.replaceAll(token, field.value.trim() || `[${token.slice(3,-3).replaceAll("_"," ")}]`);
@@ -471,9 +487,34 @@ Grazie e cordiali saluti`
       const b = document.getElementById('certificateCopy');
       b.textContent = '📋 Copia messaggio'; b.classList.remove('copied');
     }
-    Object.values(certInputs).forEach(input => input.addEventListener('input', updateCertificate));
+    // Normalizzazione in tempo reale: iniziali maiuscole nel nome; prima lettera maiuscola nell'indirizzo.
+    const certCliente = certInputs['###NOME_CLIENTE###'];
+    const certIndirizzo = certInputs['###INDIRIZZO###'];
+    certCliente.addEventListener('input', () => {
+      const start = certCliente.selectionStart;
+      const end = certCliente.selectionEnd;
+      const normalized = certCliente.value.toLocaleLowerCase('it-IT').replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g, (match, sep, letter) => sep + letter.toLocaleUpperCase('it-IT'));
+      if (certCliente.value !== normalized) {
+        certCliente.value = normalized;
+        certCliente.setSelectionRange(start, end);
+      }
+      updateCertificate();
+    });
+    certIndirizzo.addEventListener('input', () => {
+      const start = certIndirizzo.selectionStart;
+      const end = certIndirizzo.selectionEnd;
+      const normalized = certIndirizzo.value.replace(/^(\s*)(\p{L})/u, (match, spaces, letter) => spaces + letter.toLocaleUpperCase('it-IT'));
+      if (certIndirizzo.value !== normalized) {
+        certIndirizzo.value = normalized;
+        certIndirizzo.setSelectionRange(start, end);
+      }
+      updateCertificate();
+    });
+    for (const key of ['###AGENZIA###', '###OPERAZIONE###']) {
+      certInputs[key].addEventListener('change', updateCertificate);
+    }
     document.getElementById('certificateCopy').addEventListener('click', async () => {
-      const required = certVersion === 'CLIENTE' ? ['###AGENZIA###','###OPERAZIONE###','###INDIRIZZO###'] : ['###NOME_CLIENTE###','###OPERAZIONE###','###INDIRIZZO###'];
+      const required = ['###NOME_CLIENTE###','###OPERAZIONE###','###INDIRIZZO###'];
       const missing = required.filter(key => !certInputs[key].value.trim());
       if (missing.length) {
         alert('Completa prima i campi necessari al messaggio: ' + missing.map(x => x.replaceAll('#','').replaceAll('_',' ')).join(', '));
