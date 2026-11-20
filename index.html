@@ -53,6 +53,12 @@
     .copy.copied { background:#187851; }
     .empty { color:#7a8492; font-style:italic; background:#f5f7fb; border-radius:9px; padding:17px; }
     .intro { color:#8491a2; text-align:center; padding:38px 8px; font-size:14px; }
+    .certificate-fields { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:16px; }
+    .certificate-fields label { display:flex; flex-direction:column; gap:7px; font-size:12px; font-weight:750; color:#526176; letter-spacing:.4px; }
+    .certificate-fields input { width:100%; min-width:0; border:1px solid #cad5e3; border-radius:9px; font:inherit; font-weight:500; font-size:15px; letter-spacing:normal; padding:11px 10px; color:#1c2a3c; background:white; }
+    .certificate-fields input:focus { outline:2px solid #89b8ff; border-color:#2563bd; }
+    @media(max-width:800px) { .certificate-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:450px) { .certificate-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
     [hidden] { display:none!important; }
     @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } .choices.subchoices { grid-template-columns:1fr; } .choices.subchoices.credit-providers { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:17px; } }
@@ -78,6 +84,7 @@
           <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
           <button type="button" class="choice" data-category="DOMANDE"><span class="choice-icon" aria-hidden="true">🤔❓</span>DOMANDE</button>
           <button type="button" class="choice" data-category="CHIUSURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬✅</span>CHIUSURA CONVERSAZIONE</button>
+          <button type="button" class="choice" data-category="CERTIFICATO"><span class="choice-icon" aria-hidden="true">📑✅</span>CERTIFICATO</button>
         </div>
       </section>
       <section class="section" id="secondSection" hidden>
@@ -95,6 +102,20 @@
       <section class="section" id="fourthSection" hidden>
         <h2 class="step">06 — SELEZIONA MESSAGGIO DOCUMENTO</h2>
         <div class="choices subchoices" id="fourthoptions"></div>
+      </section>
+      <section class="section" id="certificateSection" hidden>
+        <h2 class="step">04 — COMPILA I DATI</h2>
+        <div class="certificate-fields">
+          <label>NOME CLIENTE <input id="certCliente" type="text" maxlength="30" placeholder="Nome cliente" autocomplete="off"></label>
+          <label>AGENZIA <input id="certAgenzia" type="text" maxlength="30" placeholder="Nome agenzia" autocomplete="off"></label>
+          <label>OPERAZIONE <input id="certOperazione" type="text" maxlength="30" placeholder="Es. voltura" autocomplete="off"></label>
+          <label>INDIRIZZO <input id="certIndirizzo" type="text" maxlength="30" placeholder="Indirizzo immobile" autocomplete="off"></label>
+        </div>
+        <div class="message" id="certificateMessage">
+          <h3 id="certificateTitle">Messaggio certificato</h3>
+          <p id="certificateText"></p>
+          <div class="actions"><button type="button" class="copy" id="certificateCopy">📋 Copia messaggio</button></div>
+        </div>
       </section>
       <section class="section" id="messagesSection" hidden>
         <h2 class="step" id="messagesHeading">04 — MESSAGGI DISPONIBILI</h2>
@@ -124,7 +145,7 @@
       "SPIEGAZIONE DETTAGLIATA": [
         {
           "titolo": "SPIEGAZIONE DETTAGLIATA",
-          "testo": "Una volta aperto il link, troverà la pagina con i consensi obbligatori e quelli facoltativi.\n\nSi assicuri di aver spuntato i due consensi obblgatori.\n\nIn fondo troverà due pdf e il tasto di conferma. Quest'ultimo tasto si abilita solo se il sistema rileva che è stato scaricato/aperto il pdf. \n\nNon occorre compilarlo, ma solo cliccarci / scaricarlo o aprirlo.\n\nSe ha fatto tutte queste azioni con cura, e comunque non si abilita la conferma, allora potrebbe essere un bug.\n\nPossiamo provare o con REINVIO di sms / mail, oppure me lo inoltra e provo a dare io conferma da un dispositivo diverso."
+          "testo": "Nel dettaglio:\n\n- una volta aperto il link, troverà la pagina con i consensi obbligatori e quelli facoltativi.\n- si assicuri di aver spuntato i consensi obbligatori, sono quelli in grassetto.\n- in fondo troverà due pdf e il tasto di conferma. Quest'ultimo tasto si abilita solo se il sistema rileva che è stato scaricato/aperto il primo pdf. Non occorre compilarlo, ma solo cliccarci / scaricarlo o aprirlo.\n\nSe ha fatto tutte queste azioni con cura, e comunque non si abilita la conferma, allora potrebbe essere un bug. Provi se riesce dalla email.\n\nCome ultima soluzione, possiamo provare con REINVIO di sms / mail, oppure, meglio ancora, me lo inoltra e provo a dare io conferma da un dispositivo diverso."
         }
       ]
     },
@@ -344,17 +365,23 @@
         "testo": ""
       }
     ],
+    "ERROR 4111 EMAIL": [
+      {
+        "titolo": "Error 4111 email",
+        "testo": "Buongiorno, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua richiesta di cambio fornitore con Octopus Energy.\n\nDurante le verifiche abbiamo riscontrato che l'indirizzo email da lei indicato risulta già associato a un altro codice fiscale nei sistemi di Octopus, impedendoci di procedere correttamente con la sottoscrizione.\n\nLe risulta di aver già utilizzato questo indirizzo email per un'altra fornitura o per un contratto intestato a un'altra persona?\n\nIn alternativa, avrebbe a disposizione un altro indirizzo email da utilizzare per completare la richiesta?\n\nLa ringrazio per la collaborazione e resto a disposizione"
+      }
+    ],
     "OFFERTA NON OTTIMALE": {
       "RICHIESTA BOLLETTA PER CONFRONTO": [
         {
           "titolo": "Richiesta bolletta per confronto",
-          "testo": "Buongiorno Marco, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua richiesta di cambio fornitore, a seguito di un'ulteriore verifica della documentazione caricata.\n\nHo riscontrato che la bolletta inserita non riporta i consumi annui della fornitura. Di conseguenza, la nostra piattaforma ha elaborato il confronto considerando un consumo pari a zero, suggerendole un'offerta ottimizzata per questo profilo, che potrebbe non essere la più conveniente in presenza di consumi superiori.\n\nPer assicurarci di proporle la soluzione economicamente più vantaggiosa, le chiederei gentilmente di inviarci una bolletta completa, dalla quale poter ricavare i consumi effettivi e verificare se sia opportuno mantenere l'offerta selezionata oppure valutarne una alternativa.\n\nLe chiederei inoltre due semplici informazioni:\n- L'immobile è utilizzato come prima o seconda casa?\n- Il gas viene utilizzato anche per il riscaldamento, oppure soltanto per acqua calda e cucina?\n\nCon queste informazioni potremo effettuare una valutazione più accurata e consigliarle la tariffa più adatta alle sue esigenze.\n\nResto a disposizione e la ringrazio per la collaborazione!\n\nDaniele\nTeam Billding"
+          "testo": "Buongiorno, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua richiesta di cambio fornitore, a seguito di un'ulteriore verifica della documentazione caricata.\n\nHo riscontrato che la bolletta inserita non riporta i consumi annui della fornitura. Di conseguenza, la nostra piattaforma ha elaborato il confronto considerando un consumo pari a zero, suggerendole un'offerta ottimizzata per questo profilo, che potrebbe non essere la più conveniente in presenza di consumi superiori.\n\nPer assicurarci di proporle la soluzione economicamente più vantaggiosa, le chiederei gentilmente di inviarci una bolletta completa, dalla quale poter ricavare i consumi effettivi e verificare se sia opportuno mantenere l'offerta selezionata oppure valutarne una alternativa.\n\nLe chiederei inoltre due semplici informazioni:\n- L'immobile è utilizzato come prima o seconda casa?\n- Il gas viene utilizzato anche per il riscaldamento, oppure soltanto per acqua calda e cucina?\n\nCon queste informazioni potremo effettuare una valutazione più accurata e consigliarle la tariffa più adatta alle sue esigenze.\n\nResto a disposizione e la ringrazio per la collaborazione!\n\nDaniele\nTeam Billding"
         }
       ],
       "SUGGERITA ALTRA OFFERTA": [
         {
           "titolo": "Suggerita altra offerta",
-          "testo": "Buongiorno Guido, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa ricontatto in merito alla sua recente richiesta di cambio fornitore con Octopus Energy.\n\nHo effettuato un'analisi più approfondita della sua bolletta e ho individuato un aspetto importante che desidero segnalarle.\n\nIn fase di lettura della documentazione, la nostra piattaforma aveva rilevato un consumo annuo di gas pari a zero, suggerendole di conseguenza l'offerta indicizzata di Octopus.\n\nDalla verifica della bolletta originale, tuttavia, emerge un consumo di gas superiore a quello inizialmente rilevato. L'offerta proposta automaticamente non risulta quindi la soluzione ottimale per il suo effettivo profilo di consumo.\n\nConsiderando inoltre gli attuali rincari del mercato energetico, vorrei proporle un'alternativa che ritengo più adatta alle sue esigenze: Eni Plenitude, con prezzo della materia prima gas bloccato a 0,75 €/Smc per 24 mesi.\n\nPer darle un riferimento, alcune offerte indicizzate possono oggi superare 1 €/metro cubo di gas, più i margini applicati dal fornitore. Avrebbe quindi un vantaggio economico significativo, oltre a rimanere protetto da ulteriori aumenti nei prossimi due anni.\n\nLa procedura prevede semplicemente che mi dia conferma: ha già il profilo attivo in Billding e non è richiesta ulteriore documentazione.\n\nCi tenevo a segnalarle questa opportunità prima di procedere, così da assicurarci che la tariffa sottoscritta fosse effettivamente la più adatta alle sue esigenze.\n\nResto a disposizione per ulteriori chiarimenti e valutare come procedere.\n\nBuona giornata!\n\nDaniele\nTeam Billding"
+          "testo": "Buongiorno, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa ricontatto in merito alla sua recente richiesta di cambio fornitore con Octopus Energy.\n\nHo effettuato un'analisi più approfondita della sua bolletta e ho individuato un aspetto importante che desidero segnalarle.\n\nIn fase di lettura della documentazione, la nostra piattaforma aveva rilevato un consumo annuo di gas pari a zero, suggerendole di conseguenza l'offerta indicizzata di Octopus.\n\nDalla verifica della bolletta originale, tuttavia, emerge un consumo di gas superiore a quello inizialmente rilevato. L'offerta proposta automaticamente non risulta quindi la soluzione ottimale per il suo effettivo profilo di consumo.\n\nConsiderando inoltre gli attuali rincari del mercato energetico, vorrei proporle un'alternativa che ritengo più adatta alle sue esigenze: Eni Plenitude, con prezzo della materia prima gas bloccato a 0,75 €/Smc per 24 mesi.\n\nPer darle un riferimento, alcune offerte indicizzate possono oggi superare 1 €/metro cubo di gas, più i margini applicati dal fornitore. Avrebbe quindi un vantaggio economico significativo, oltre a rimanere protetto da ulteriori aumenti nei prossimi due anni.\n\nLa procedura prevede semplicemente che mi dia conferma: ha già il profilo attivo in Billding e non è richiesta ulteriore documentazione.\n\nCi tenevo a segnalarle questa opportunità prima di procedere, così da assicurarci che la tariffa sottoscritta fosse effettivamente la più adatta alle sue esigenze.\n\nResto a disposizione per ulteriori chiarimenti e valutare come procedere.\n\nBuona giornata!\n\nDaniele\nTeam Billding"
         }
       ]
     }
@@ -395,6 +422,79 @@
   }
 };
 
+    // CERTIFICATO: tutti i dati rimangono soltanto nel browser, non vengono salvati.
+    const certificati = {
+      'CLIENTE': `Buongiorno, 
+
+piacere sono ###OPERATORE###, del servizio clienti di Billding, in collaborazione con ###AGENZIA###. 
+
+Per completare la sua richiesta di ###OPERAZIONE### con A2A per ###INDIRIZZO### , occorre un titolo di possesso dell'immobile: rogito, contratto d'affitto, o il certificato di registrazione all'agenzia delle entrate. 
+
+In alternativa, come soluzione equivalente, possiamo effettuare ###OPERAZIONE### con Eni Plenitude che ha tariffa pari ad A2A ma non richiede documentazione.
+
+Rimango in attesa di urgente riscontro, 
+Grazie e cordiali saluti`,
+      'AGENZIA': `Buongiorno, 
+
+piacere sono ###OPERATORE###, del servizio clienti di Billding, vi contatto per la richiesta di ###OPERAZIONE### di ###NOME_CLIENTE### in ###INDIRIZZO###. 
+
+Per completare la richiesta del cliente con A2A occorre un titolo di possesso dell'immobile: rogito, contratto d'affitto, o il certificato di registrazione all'agenzia delle entrate. 
+
+In alternativa, come soluzione equivalente, possiamo effettuare ###OPERAZIONE### con Eni Plenitude che ha tariffa pari ad A2A ma non richiede documentazione.
+
+Come procediamo? 
+Rimango in attesa di urgente riscontro, 
+
+Grazie e cordiali saluti`
+    };
+    let certVersion = null;
+    const certificateSection = document.getElementById('certificateSection');
+    const certInputs = {
+      '###NOME_CLIENTE###': document.getElementById('certCliente'),
+      '###AGENZIA###': document.getElementById('certAgenzia'),
+      '###OPERAZIONE###': document.getElementById('certOperazione'),
+      '###INDIRIZZO###': document.getElementById('certIndirizzo')
+    };
+    function composeCertificate() {
+      if (!certVersion) return '';
+      let result = certificati[certVersion].replaceAll('###OPERATORE###', state.operator || 'Daniele');
+      for (const [token, field] of Object.entries(certInputs)) {
+        // Evidenzia i campi da completare nella preview, ma non altera gli altri messaggi.
+        result = result.replaceAll(token, field.value.trim() || `[${token.slice(3,-3).replaceAll("_"," ")}]`);
+      }
+      return result;
+    }
+    function updateCertificate() {
+      if (!certVersion) return;
+      document.getElementById('certificateTitle').textContent = certVersion === 'CLIENTE' ? 'Versione per cliente' : 'Versione per agenzia';
+      document.getElementById('certificateText').textContent = composeCertificate();
+      const b = document.getElementById('certificateCopy');
+      b.textContent = '📋 Copia messaggio'; b.classList.remove('copied');
+    }
+    Object.values(certInputs).forEach(input => input.addEventListener('input', updateCertificate));
+    document.getElementById('certificateCopy').addEventListener('click', async () => {
+      const required = certVersion === 'CLIENTE' ? ['###AGENZIA###','###OPERAZIONE###','###INDIRIZZO###'] : ['###NOME_CLIENTE###','###OPERAZIONE###','###INDIRIZZO###'];
+      const missing = required.filter(key => !certInputs[key].value.trim());
+      if (missing.length) {
+        alert('Completa prima i campi necessari al messaggio: ' + missing.map(x => x.replaceAll('#','').replaceAll('_',' ')).join(', '));
+        certInputs[missing[0]].focus();
+        return;
+      }
+      const txt = composeCertificate();
+      const btn = document.getElementById('certificateCopy');
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(txt);
+        else {
+          const area = document.createElement('textarea'); area.value = txt;
+          area.style.position = 'fixed'; area.style.opacity = '0';
+          document.body.appendChild(area); area.select();
+          const ok = document.execCommand('copy'); area.remove();
+          if (!ok) throw new Error('Copia non consentita');
+        }
+        btn.textContent = '✅ Copiato!'; btn.classList.add('copied');
+      } catch(err) { btn.textContent = 'Copia non riuscita'; console.error(err); }
+    });
+
     // Loghi fornitori forniti da Billding. In caso di errore rimane visibile il nome.
     const loghi = {
       ENEL: 'https://assets-billding.s3.eu-central-1.amazonaws.com/images/logos/enel/enel_logo.svg',
@@ -434,6 +534,7 @@
         if (state.thirdoption) entry = entry[state.thirdoption];
         if (Array.isArray(entry)) renderMessages(entry);
       } // aggiorna nome nei messaggi
+      if (certVersion && state.category === 'CERTIFICATO') updateCertificate();
     }
 
     function chooseCategory(category) {
@@ -451,6 +552,35 @@
       options.replaceChildren();
       options.classList.toggle('ko', category === 'KO');
       options.classList.toggle('questions', category === 'DOMANDE' || category === 'CHIUSURA CONVERSAZIONE');
+      certificateSection.hidden = true;
+      certVersion = null;
+      if (category === 'CERTIFICATO') {
+        document.getElementById('secondHeading').textContent = '03 — SELEZIONA DESTINATARIO';
+        for (const name of ['CLIENTE','AGENZIA']) {
+          const button = document.createElement('button');
+          button.type = 'button'; button.className = 'choice';
+          button.textContent = name === 'CLIENTE' ? '👤 CLIENTE' : '🏢 AGENZIA';
+          button.dataset.option = name;
+          button.addEventListener('click', () => {
+            state.option = name;
+            certVersion = name;
+            for (const b of options.children) {
+              const active = b === button; b.classList.toggle('active',active);
+              b.setAttribute('aria-pressed', String(active));
+            }
+            certificateSection.hidden = false;
+            updateCertificate();
+          });
+          options.appendChild(button);
+        }
+        secondSection.hidden = false;
+        messagesSection.hidden = true;
+        suboptionSection.hidden = true;
+        thirdSection.hidden = true;
+        fourthSection.hidden = true;
+        intro.hidden = true;
+        return;
+      }
       const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FORNITORE', PROMEMORIA:'FORNITORE' };
       document.getElementById('secondHeading').textContent = '03 — SELEZIONA ' + labels[category];
       for (const name of Object.keys(catalogo[category])) {
@@ -625,6 +755,9 @@
       state.option = null;
       state.suboption = null;
       state.thirdoption = null;
+      certVersion = null;
+      certificateSection.hidden = true;
+      for (const field of Object.values(certInputs)) field.value = '';
       suboptionSection.hidden = true;
       thirdSection.hidden = true;
       operatorButtons.forEach(button => { button.classList.remove('active'); button.setAttribute('aria-pressed','false'); });
