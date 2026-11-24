@@ -80,7 +80,6 @@
         <h2 class="step">02 — SELEZIONA CATEGORIA</h2>
         <div class="choices categories" id="categories">
           <button type="button" class="choice" data-category="FIRMA"><span class="choice-icon" aria-hidden="true">✍️📄</span>FIRMA</button>
-          <button type="button" class="choice" data-category="PROMEMORIA"><span class="choice-icon" aria-hidden="true">⚠️📄</span>PROMEMORIA</button>
           <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
           <button type="button" class="choice" data-category="DOMANDE"><span class="choice-icon" aria-hidden="true">🤔❓</span>DOMANDE</button>
           <button type="button" class="choice" data-category="CHIUSURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬✅</span>CHIUSURA CONVERSAZIONE</button>
@@ -141,66 +140,80 @@
     // TESTI: modificare qui i messaggi. I campi non forniti sono intenzionalmente vuoti.
     const catalogo = {
   "FIRMA": {
-    "ENEL": [
-      {
-        "titolo": "Firma digitale",
-        "testo": "Gentile cliente, \n\nPiacere, sono Armando di Billding per la gestione del cambio fornitore per le sue utenze.\nLa prego di confermarmi di aver letto questo messaggio. \n\nHo avviato la pratica con ENEL, che le invierà a breve una mail di presa in carico della richiesta.\n\nRiceverà in seguito una mail da FIRMARE DIGITALMENTE per COMPLETARE l'operazione. \nDovrà aprirla e verificarla inserendo un'OTP che le sarà inviato tramite SMS. \nSi aprirà una pagina con in fondo un questionario in cui indicare la prima opzione \"Ho incontrato il consulente di persona senza precedente telefonata\". ⬅️\n\nE' indispensabile questa procedura per completare la richiesta. \nQualora non ricevesse l'email con OTP entro 2 giorni, cerchi nello spam, e mi avverta tempestivamente.\n\nCordiali saluti\n\nArmando\nTeam Billding"
-      }
-    ],
-    "PLENITUDE": {
-      "1° FIRMA": [
+    "PRIMO INVIO": {
+      "ENEL": [
         {
-          "titolo": "1° FIRMA",
-          "testo": "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding"
+          "titolo": "Firma digitale",
+          "testo": "Gentile cliente, \n\nPiacere, sono Armando di Billding per la gestione del cambio fornitore per le sue utenze.\nLa prego di confermarmi di aver letto questo messaggio. \n\nHo avviato la pratica con ENEL, che le invierà a breve una mail di presa in carico della richiesta.\n\nRiceverà in seguito una mail da FIRMARE DIGITALMENTE per COMPLETARE l'operazione. \nDovrà aprirla e verificarla inserendo un'OTP che le sarà inviato tramite SMS. \nSi aprirà una pagina con in fondo un questionario in cui indicare la prima opzione \"Ho incontrato il consulente di persona senza precedente telefonata\". ⬅️\n\nE' indispensabile questa procedura per completare la richiesta. \nQualora non ricevesse l'email con OTP entro 2 giorni, cerchi nello spam, e mi avverta tempestivamente.\n\nCordiali saluti\n\nArmando\nTeam Billding"
         }
       ],
-      "SPIEGAZIONE DETTAGLIATA": [
+      "PLENITUDE": {
+        "1° FIRMA": [
+          {
+            "titolo": "1° FIRMA",
+            "testo": "Buongiorno, \npiacere sono Daniele di Billding per la lavorazione della sua richiesta con Eni Plenitude.\n\nRiceverà a momenti una email. Dovrà:\n1) aprire mail\n2) spuntare flag obbligatori\n3) aprire 2 PDF in fondo alla mail\n4) PREMERE CONFERMA ✅ in fondo quando diventa cliccabile\n\nLa prego di completare tutto oggi e darmi conferma.\n\nGrazie e buona giornata!\n\nDaniele\nTeam Billding"
+          }
+        ],
+        "SPIEGAZIONE DETTAGLIATA": [
+          {
+            "titolo": "SPIEGAZIONE DETTAGLIATA",
+            "testo": "Nel dettaglio:\n\n- una volta aperto il link, troverà la pagina con i consensi obbligatori e quelli facoltativi.\n- si assicuri di aver spuntato i consensi obbligatori, sono quelli in grassetto.\n- in fondo troverà due pdf e il tasto di conferma. Quest'ultimo tasto si abilita solo se il sistema rileva che è stato scaricato/aperto il primo pdf. Non occorre compilarlo, ma solo cliccarci / scaricarlo o aprirlo.\n\nSe ha fatto tutte queste azioni con cura, e comunque non si abilita la conferma, allora potrebbe essere un bug. Provi se riesce dalla email.\n\nCome ultima soluzione, possiamo provare con REINVIO di sms / mail, oppure, meglio ancora, me lo inoltra e provo a dare io conferma da un dispositivo diverso."
+          }
+        ]
+      },
+      "ILLUMIA": [
         {
-          "titolo": "SPIEGAZIONE DETTAGLIATA",
-          "testo": "Nel dettaglio:\n\n- una volta aperto il link, troverà la pagina con i consensi obbligatori e quelli facoltativi.\n- si assicuri di aver spuntato i consensi obbligatori, sono quelli in grassetto.\n- in fondo troverà due pdf e il tasto di conferma. Quest'ultimo tasto si abilita solo se il sistema rileva che è stato scaricato/aperto il primo pdf. Non occorre compilarlo, ma solo cliccarci / scaricarlo o aprirlo.\n\nSe ha fatto tutte queste azioni con cura, e comunque non si abilita la conferma, allora potrebbe essere un bug. Provi se riesce dalla email.\n\nCome ultima soluzione, possiamo provare con REINVIO di sms / mail, oppure, meglio ancora, me lo inoltra e provo a dare io conferma da un dispositivo diverso."
+          "titolo": "Firma digitale",
+          "testo": ""
         }
       ]
     },
-    "ILLUMIA": [
+    "PROMEMORIA": {
+      "ENEL": [
+        {
+          "titolo": "Primo promemoria",
+          "testo": ""
+        },
+        {
+          "titolo": "Secondo promemoria",
+          "testo": ""
+        }
+      ],
+      "PLENITUDE": [
+        {
+          "titolo": "Primo promemoria",
+          "testo": ""
+        },
+        {
+          "titolo": "Secondo promemoria",
+          "testo": ""
+        },
+        {
+          "titolo": "Offerta in scadenza oggi — email e SMS reinviati",
+          "testo": "Buongiorno, la ricontatto con urgenza per la sua richiesta con Eni Plenitude.\n\n**⚠️ L'offerta SCADE questa sera e la conferma NON risulta ancora completata.**\n\nAbbiamo appena provveduto a **reinviarle email e SMS** per completare la sottoscrizione.\n\nLe chiediamo gentilmente di **procedere entro oggi**, per non perdere le condizioni economiche concordate, e di darci conferma una volta completato.\n\nGrazie per la collaborazione!\n\nDaniele\nTeam Billding"
+        }
+      ],
+      "ILLUMIA": [
+        {
+          "titolo": "Primo promemoria",
+          "testo": ""
+        },
+        {
+          "titolo": "Secondo promemoria",
+          "testo": ""
+        }
+      ]
+    },
+    "RIAVVIO": [
       {
-        "titolo": "Firma digitale",
-        "testo": ""
-      }
-    ]
-  },
-  "PROMEMORIA": {
-    "ENEL": [
-      {
-        "titolo": "Primo promemoria",
-        "testo": ""
-      },
-      {
-        "titolo": "Secondo promemoria",
-        "testo": ""
+        "titolo": "Riavvio firma — Plenitude",
+        "testo": "Buongiorno, la ricontatto in quanto risulta NON PERVENUTA la firma per la sua richiesta con Eni Plenitude.\n\nProvvedo a riavviarla e *reinviarle l'email* per completare la sottoscrizione.\n\nLe chiediamo gentilmente di *procedere entro oggi*, per non perdere le condizioni economiche concordate, e di darci conferma una volta completato.\n\nGrazie per la collaborazione!\n\nDaniele\nTeam Billding"
       }
     ],
-    "PLENITUDE": [
+    "CONFERMA": [
       {
-        "titolo": "Primo promemoria",
-        "testo": ""
-      },
-      {
-        "titolo": "Secondo promemoria",
-        "testo": ""
-      },
-      {
-        "titolo": "Offerta in scadenza oggi — email e SMS reinviati",
-        "testo": "Buongiorno, la ricontatto con urgenza per la sua richiesta con Eni Plenitude.\n\n**⚠️ L'offerta SCADE questa sera e la conferma NON risulta ancora completata.**\n\nAbbiamo appena provveduto a **reinviarle email e SMS** per completare la sottoscrizione.\n\nLe chiediamo gentilmente di **procedere entro oggi**, per non perdere le condizioni economiche concordate, e di darci conferma una volta completato.\n\nGrazie per la collaborazione!\n\nDaniele\nTeam Billding"
-      }
-    ],
-    "ILLUMIA": [
-      {
-        "titolo": "Primo promemoria",
-        "testo": ""
-      },
-      {
-        "titolo": "Secondo promemoria",
-        "testo": ""
+        "titolo": "Conferma firma",
+        "testo": "Buongiorno, le confermo che *la sua pratica risulta correttamente firmata* e che la procedura di sottoscrizione è stata completata con successo.\n\nRimango a disposizione per qualsiasi ulteriore necessità.\n\nCordiali saluti,\n\n_Team Billding_"
       }
     ]
   },
@@ -626,14 +639,14 @@ Grazie e cordiali saluti`
         intro.hidden = true;
         return;
       }
-      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FORNITORE', PROMEMORIA:'FORNITORE' };
+      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FASE DELLA FIRMA' };
       document.getElementById('secondHeading').textContent = '03 — SELEZIONA ' + labels[category];
       for (const name of Object.keys(catalogo[category])) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
         button.dataset.option = name;
-        if ((category === 'FIRMA' || category === 'PROMEMORIA') && loghi[name]) {
+        if (category === 'FIRMA' && loghi[name]) {
           button.classList.add('supplier-choice');
           const logo = document.createElement('img');
           logo.className = 'supplier-logo';
@@ -676,8 +689,22 @@ Grazie e cordiali saluti`
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
-        button.textContent = name;
         button.dataset.suboption = name;
+        if (state.category === 'FIRMA' && depth === 1 && (state.option === 'PRIMO INVIO' || state.option === 'PROMEMORIA') && loghi[name]) {
+          button.classList.add('supplier-choice');
+          const logo = document.createElement('img');
+          logo.className = 'supplier-logo';
+          logo.src = loghi[name];
+          logo.alt = '';
+          logo.loading = 'lazy';
+          logo.addEventListener('error', () => button.classList.add('logo-failed'));
+          const label = document.createElement('span');
+          label.className = 'supplier-label';
+          label.textContent = name;
+          button.append(logo,label);
+        } else {
+          button.textContent = name;
+        }
         button.addEventListener('click', () => {
           for (const other of container.children) {
             const active = other === button;
@@ -692,7 +719,7 @@ Grazie e cordiali saluti`
             const next = entry[name];
             if (Array.isArray(next)) renderMessages(next);
             else {
-              thirdSection.querySelector('.step').textContent = state.category === 'KO' && state.option === 'KO CREDITIZIO' ? '05 — SELEZIONA ESITO' : state.category === 'KO' && state.option === 'CARTA IDENTITÀ' ? '05 — SELEZIONA MESSAGGIO DOCUMENTO' : '05 — SELEZIONA SOLUZIONE';
+              thirdSection.querySelector('.step').textContent = state.category === 'KO' && state.option === 'KO CREDITIZIO' ? '05 — SELEZIONA ESITO' : state.category === 'FIRMA' ? '05 — SELEZIONA MESSAGGIO' : state.category === 'KO' && state.option === 'CARTA IDENTITÀ' ? '05 — SELEZIONA MESSAGGIO DOCUMENTO' : '05 — SELEZIONA SOLUZIONE';
               makeOptionButtons(thirdoptions, next, 2);
               thirdSection.hidden = false;
               messagesSection.hidden = true;
@@ -728,7 +755,7 @@ Grazie e cordiali saluti`
       }
       const entry = catalogo[state.category][option];
       if (!Array.isArray(entry)) {
-        suboptionSection.querySelector('.step').textContent = state.category === 'KO' && option === 'KO CREDITIZIO' ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'FIRMA' && option === 'PLENITUDE' ? '04 — SELEZIONA MESSAGGIO PLENITUDE' : state.category === 'KO' && option === 'CARTA IDENTITÀ' ? '04 — SELEZIONA CASISTICA DOCUMENTO' : state.category === 'KO' && option === 'OFFERTA NON OTTIMALE' ? '04 — SELEZIONA TIPOLOGIA OFFERTA' : '04 — SELEZIONA SOLUZIONE';
+        suboptionSection.querySelector('.step').textContent = state.category === 'FIRMA' && (option === 'PRIMO INVIO' || option === 'PROMEMORIA') ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'KO CREDITIZIO' ? '04 — SELEZIONA FORNITORE' : state.category === 'KO' && option === 'IBAN' ? '04 — SELEZIONA TIPOLOGIA IBAN' : state.category === 'KO' && option === 'CARTA IDENTITÀ' ? '04 — SELEZIONA CASISTICA DOCUMENTO' : state.category === 'KO' && option === 'OFFERTA NON OTTIMALE' ? '04 — SELEZIONA TIPOLOGIA OFFERTA' : '04 — SELEZIONA SOLUZIONE';
         suboptions.classList.toggle('credit-providers', state.category === 'KO' && option === 'KO CREDITIZIO');
         makeOptionButtons(suboptions, entry, 1);
         suboptionSection.hidden = false;
