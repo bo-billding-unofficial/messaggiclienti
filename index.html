@@ -144,6 +144,38 @@
       .choices:not(.categories) .supplier-choice { min-height: 94px; }
       .choices.questions .choice { min-height: 105px; }
     }
+    /* V26 — I tre operatori occupano tutta la larghezza disponibile. */
+    #operators {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+    }
+    @media (max-width: 650px) {
+      #operators { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    /* V27 — ogni riga usa il 100% dello spazio: niente colonne vuote. */
+    .choices, .choices.categories, .choices.questions, .choices.ko,
+    .choices.subchoices, .choices.subchoices.credit-providers, #operators {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      width:100%;
+    }
+    .choices > .choice { min-width:0; flex:1 1 calc((100% - 36px) / 4); }
+    #operators > .choice, .choices.categories > .choice {
+      flex-basis:calc((100% - 24px) / 3);
+    }
+    @media (max-width:750px) {
+      .choices > .choice { flex-basis:calc((100% - 12px) / 2); }
+      #operators > .choice { flex-basis:calc((100% - 24px) / 3); }
+      .choices.categories > .choice { flex-basis:calc((100% - 12px) / 2); }
+    }
+    @media (max-width:650px) {
+      .choices, .choices.categories, .choices.questions, .choices.ko,
+      .choices.subchoices, .choices.subchoices.credit-providers, #operators { gap:9px; }
+      .choices > .choice, .choices.categories > .choice { flex-basis:calc((100% - 9px) / 2); }
+      #operators > .choice { flex-basis:calc((100% - 18px) / 3); }
+    }
   </style>
 </head>
 <body>
