@@ -62,6 +62,36 @@
     .note { margin-top:17px; font-size:12px; color:#7a8492; line-height:1.5; }
     [hidden] { display:none!important; }
     @media(max-width:650px) { .head { padding:19px 16px; } main { margin:20px auto; padding:0 12px 35px; } .panel { padding:17px; } .choices { gap:8px; } .choice { min-height:90px; font-size:15px; padding:12px 5px; } .choices.categories { grid-template-columns:repeat(2,minmax(0,1fr)); } .choices.questions { grid-template-columns:1fr; } .operator-choice { font-size:17px; } .choices.ko { grid-template-columns:1fr 1fr; } .choices.subchoices { grid-template-columns:1fr; } .choices.subchoices.credit-providers { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:17px; } }
+    /* V21 — layout compatto: fino a 4 pulsanti per riga */
+    .choices, .choices.categories, .choices.questions, .choices.ko,
+    .choices.subchoices, .choices.subchoices.credit-providers {
+      grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px;
+    }
+    .choice { min-height:58px; padding:10px 9px; font-size:16px; line-height:1.2; }
+    .operator-choice { min-height:52px; padding:9px 8px; font-size:18px; }
+    .categories .choice { min-height:68px; padding:9px 6px; font-size:15px; }
+    .choice-icon { font-size:23px; margin-bottom:5px; }
+    .ko .choice, .questions .choice, .credit-providers .choice,
+    .subchoices .choice { min-height:56px; padding:9px 8px; }
+    .supplier-choice { gap:5px; min-height:70px; }
+    .supplier-logo { height:29px; }
+    .supplier-label { font-size:15px; }
+    @media(max-width:750px) {
+      .choices, .choices.categories, .choices.questions, .choices.ko,
+      .choices.subchoices, .choices.subchoices.credit-providers {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+    @media(max-width:650px) {
+      .choices, .choices.categories, .choices.questions, .choices.ko,
+      .choices.subchoices, .choices.subchoices.credit-providers {
+        grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
+      }
+      .choice, .ko .choice, .questions .choice, .subchoices .choice { min-height:54px; padding:9px 6px; font-size:14px; }
+      .operator-choice { min-height:49px; font-size:15px; }
+      .categories .choice { min-height:64px; font-size:13px; }
+      .choice-icon { font-size:21px; margin-bottom:4px; }
+    }
   </style>
 </head>
 <body>
@@ -79,11 +109,12 @@
       <section class="section" id="categorySection" hidden>
         <h2 class="step">02 — SELEZIONA CATEGORIA</h2>
         <div class="choices categories" id="categories">
+          <button type="button" class="choice" data-category="APERTURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬👋</span>APERTURA CONVERSAZIONE</button>
           <button type="button" class="choice" data-category="FIRMA"><span class="choice-icon" aria-hidden="true">✍️📄</span>FIRMA</button>
           <button type="button" class="choice" data-category="KO"><span class="choice-icon" aria-hidden="true">❌</span>KO</button>
           <button type="button" class="choice" data-category="DOMANDE"><span class="choice-icon" aria-hidden="true">🤔❓</span>DOMANDE</button>
-          <button type="button" class="choice" data-category="CHIUSURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬✅</span>CHIUSURA CONVERSAZIONE</button>
-          <button type="button" class="choice" data-category="CERTIFICATO"><span class="choice-icon" aria-hidden="true">📑✅</span>CERTIFICATO</button>
+          <button type="button" class="choice" data-category="CHIUSURA CONVERSAZIONE"><span class="choice-icon" aria-hidden="true">💬🚪</span>CHIUSURA CONVERSAZIONE</button>
+          <button type="button" class="choice" data-category="CERTIFICATO"><span class="choice-icon" aria-hidden="true">📑🏠</span>CERTIFICATO</button>
         </div>
       </section>
       <section class="section" id="secondSection" hidden>
@@ -139,6 +170,11 @@
   <script>
     // TESTI: modificare qui i messaggi. I campi non forniti sono intenzionalmente vuoti.
     const catalogo = {
+  "APERTURA CONVERSAZIONE": {
+    "Saluto iniziale": [
+      {"titolo":"Apertura conversazione","testo":"Buongiorno, \npiacere sono Daniele del Servizio Clienti di Billding. Come posso aiutarla?"}
+    ]
+  },
   "FIRMA": {
     "PRIMO INVIO": {
       "ENEL": [
@@ -413,6 +449,20 @@
           "testo": "Buongiorno, piacere, sono Daniele del Servizio Clienti Billding.\n\nLa ricontatto in merito alla sua recente richiesta di cambio fornitore con Octopus Energy.\n\nHo effettuato un'analisi più approfondita della sua bolletta e ho individuato un aspetto importante che desidero segnalarle.\n\nIn fase di lettura della documentazione, la nostra piattaforma aveva rilevato un consumo annuo di gas pari a zero, suggerendole di conseguenza l'offerta indicizzata di Octopus.\n\nDalla verifica della bolletta originale, tuttavia, emerge un consumo di gas superiore a quello inizialmente rilevato. L'offerta proposta automaticamente non risulta quindi la soluzione ottimale per il suo effettivo profilo di consumo.\n\nConsiderando inoltre gli attuali rincari del mercato energetico, vorrei proporle un'alternativa che ritengo più adatta alle sue esigenze: Eni Plenitude, con prezzo della materia prima gas bloccato a 0,75 €/Smc per 24 mesi.\n\nPer darle un riferimento, alcune offerte indicizzate possono oggi superare 1 €/metro cubo di gas, più i margini applicati dal fornitore. Avrebbe quindi un vantaggio economico significativo, oltre a rimanere protetto da ulteriori aumenti nei prossimi due anni.\n\nLa procedura prevede semplicemente che mi dia conferma: ha già il profilo attivo in Billding e non è richiesta ulteriore documentazione.\n\nCi tenevo a segnalarle questa opportunità prima di procedere, così da assicurarci che la tariffa sottoscritta fosse effettivamente la più adatta alle sue esigenze.\n\nResto a disposizione per ulteriori chiarimenti e valutare come procedere.\n\nBuona giornata!\n\nDaniele\nTeam Billding"
         }
       ]
+    },
+    "FUB": {
+      "KO FUB": [
+        {
+          "titolo": "KO FUB",
+          "testo": "Buonasera\n\nFastweb mi ha segnalato di non essere riuscito a mettersi in contatto con lei a causa del suo numero di cellulare registrato presso il \"Registro delle opposizioni\".\n\nPer procedere con la conferma telefonica, le chiedo se preferisce:\n1) Fornire un recapito alternativo per la conferma telefonica \no in alternativa\n2) disiscrivere (temporaneamente) il suo numero dal registro (ma solo per il tempo di ricevere la chiamata di conferma da uno 0835.. per la conferma dati).\n\nRiporto qui la brevissima procedura di disattivazione:\n- chiamare 06 42986411\n- restare in linea aspettando che termini la voce, dirà \"risulti iscrittto\"\n- la voce dirà \"per cancellare la tua iscrizione\" premi 3\n\nAttendo cortese riscontro su come procedere per lo sblocco del numero e quindi al cambio gestore\n\nGrazie e cordiali saluti\n\nTeam Billding"
+        }
+      ],
+      "SPIEGAZIONE DETTAGLIATA": [
+        {
+          "titolo": "SPIEGAZIONE DETTAGLIATA",
+          "testo": ""
+        }
+      ]
     }
   },
   "CHIUSURA CONVERSAZIONE": {
@@ -445,7 +495,7 @@
     "Numero errato": [
       {
         "titolo": "Numero errato",
-        "testo": "Buongiorno, \n\nper quanto riguarda il numero di telefono, le confermo che è stato intenzionalmente modificato a tua tutela per la sola fase di avvio della pratica.\n\nLa motivazione di tale scelta, nel suo esclusivo interesse, è di impedire a call center truffa di raggiungerla qualora ci siano fughe o cessioni di dati illecite dai sistemi online durante la fase di passaggio a PLENITUDE. Abbiamo ricevuto numerose segnalazioni e la priorità per noi è preservare l'esperienza del cliente senza che venga assillato dai call center. \n\nIl numero è facilmente modificabile dall'area personale, e si può correggere in un secondo momento, se serve col nostro supporto.\n\nSpero di aver chiarito i dubbi e rimango a disposizione per qualsiasi esigenza."
+        "testo": "Buongiorno, \n\nper quanto riguarda il numero di telefono, le confermo che è stato intenzionalmente modificato a sua tutela per la sola fase di avvio della pratica.\n\nLa motivazione di tale scelta, nel suo esclusivo interesse, è di impedire a call center truffa di raggiungerla qualora ci siano fughe o cessioni di dati illecite dai sistemi online durante la fase di passaggio a PLENITUDE. Abbiamo ricevuto numerose segnalazioni e la priorità per noi è preservare l'esperienza del cliente senza che venga assillato dai call center. \n\nIl numero è facilmente modificabile dall'area personale, e si può correggere in un secondo momento, se serve col nostro supporto.\n\nSpero di aver chiarito i dubbi e rimango a disposizione per qualsiasi esigenza."
       }
     ]
   }
@@ -639,7 +689,7 @@ Grazie e cordiali saluti`
         intro.hidden = true;
         return;
       }
-      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FASE DELLA FIRMA' };
+      const labels = { KO:'TIPOLOGIA KO', DOMANDE:'DOMANDA', 'CHIUSURA CONVERSAZIONE':'MESSAGGIO', 'APERTURA CONVERSAZIONE':'MESSAGGIO', FIRMA:'FASE DELLA FIRMA' };
       document.getElementById('secondHeading').textContent = '03 — SELEZIONA ' + labels[category];
       for (const name of Object.keys(catalogo[category])) {
         const button = document.createElement('button');
