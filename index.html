@@ -46,6 +46,11 @@
     .reset:hover { color:#1657a5; }
     .message { border:1px solid #dfe5ee; border-radius:12px; padding:19px; margin-top:12px; }
     .message h3 { margin:0 0 13px; font-size:15px; }
+    .message.clickable { cursor:pointer; transition:border-color .15s, background .15s; }
+    .message.clickable:hover { border-color:#3b75d1; }
+    .message.clickable:focus-visible { outline:3px solid #89b8ff; outline-offset:2px; }
+    .copy-status { margin-top:12px; font-size:13px; font-weight:700; color:#187851; }
+    .copy-status.error { color:#b45309; }
     .message p { white-space:pre-wrap; overflow-wrap:anywhere; margin:0; padding:17px; font-size:14px; line-height:1.65; background:#f5f7fb; border-radius:9px; }
     .actions { display:flex; justify-content:flex-end; margin-top:14px; }
     .copy { border:0; background:#2563bd; color:#fff; font:inherit; font-size:16px; font-weight:750; border-radius:9px; padding:11px 16px; cursor:pointer; }
@@ -577,12 +582,20 @@
         "testo": "Buongiorno, molto piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua richiesta di cambio fornitore con A2A.\n\nDurante la trasmissione ad A2A abbiamo riscontrato un blocco per un *vincolo commerciale interno*, da loro denominato *\"KO Portafoglio\"*.\n\nQuesto significa che la sua utenza risulta già associata a un agente o ufficio commerciale A2A.\n\nIn queste situazioni, il fornitore non ci consente di procedere con una nuova richiesta tramite il nostro canale. Si tratta di una limitazione gestionale di A2A, non di un problema relativo alla sua fornitura o ai dati inseriti.\n\nPossiamo comunque valutare *soluzioni alternative con altri fornitori*, individuando un'offerta conveniente che ci permetta di procedere senza questa limitazione.\n\nLe chiedo gentilmente di confermarmi *se desidera valutare questa possibilità*, così da poterle proporre un'alternativa.\n\nRimango in attesa di un suo riscontro.\n\nGrazie e cordiali saluti,\n\nDaniele\n_Team Billding_"
       }
     ],
-    "KO RIPENSAMENTO": [
-      {
-        "titolo": "KO RIPENSAMENTO",
-        "testo": "Buongiorno, molto piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua recente richiesta di cambio fornitore.\n\nDurante le verifiche abbiamo riscontrato che *sembrerebbe essere stata presentata una richiesta di ripensamento*, con conseguente annullamento della sottoscrizione.\n\nVorrei gentilmente verificare con lei se *ha effettivamente richiesto l'annullamento del contratto* oppure se si tratta di un'anomalia nella gestione della pratica da parte del fornitore.\n\nQualora avesse deciso di non procedere, rispetteremo la sua scelta. In alternativa, possiamo verificare la possibilità di riprendere la richiesta o valutare altre soluzioni convenienti per la sua fornitura.\n\nLe chiedo gentilmente un riscontro, così da comprendere come desidera procedere.\n\nGrazie e cordiali saluti,\n\nDaniele\n_Team Billding_"
-      }
-    ],
+    "KO RIPENSAMENTO": {
+      "VERIFICA RIPENSAMENTO": [
+        {
+          "titolo": "Verifica ripensamento",
+          "testo": "Buongiorno, molto piacere, sono Daniele del Servizio Clienti Billding.\n\nLa contatto in merito alla sua recente richiesta di cambio fornitore.\n\nDurante le verifiche abbiamo riscontrato che *sembrerebbe essere stata presentata una richiesta di ripensamento*, con conseguente annullamento della sottoscrizione.\n\nVorrei gentilmente verificare con lei se *ha effettivamente richiesto l'annullamento del contratto* oppure se si tratta di un'anomalia nella gestione della pratica da parte del fornitore.\n\nQualora avesse deciso di non procedere, rispetteremo la sua scelta. In alternativa, possiamo verificare la possibilità di riprendere la richiesta o valutare altre soluzioni convenienti per la sua fornitura.\n\nLe chiedo gentilmente un riscontro, così da comprendere come desidera procedere.\n\nGrazie e cordiali saluti,\n\nDaniele\n_Team Billding_"
+        }
+      ],
+      "RIPROPOSTA": [
+        {
+          "titolo": "Riproposta",
+          "testo": "Perfetto, posso chiederle la motivazione di questa scelta?\n\nQualora desiderasse, possiamo valutare soluzioni alternative con altri fornitori, individuando un'offerta conveniente che possa fare maggiormente al caso suo.\n\nRimango in attesa di un suo riscontro.\n\nGrazie e cordiali saluti,\n\nDaniele\n_Team Billding_"
+        }
+      ]
+    },
     "ERROR 4111 EMAIL": [
       {
         "titolo": "Error 4111 email",
@@ -978,9 +991,29 @@ _Team Billding_`
       }
     }
 
+    // La copia va avviata direttamente dal click sull'ultima scelta.
+    // Il ripiego mantiene la compatibilità con browser che non espongono Clipboard API.
+    async function copyToClipboard(testo) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(testo); return; }
+        catch (error) { console.warn('Clipboard API non disponibile; tento la copia alternativa.',error); }
+      }
+      const area = document.createElement('textarea');
+      area.value = testo;
+      area.setAttribute('readonly', '');
+      area.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+      document.body.appendChild(area);
+      area.focus();
+      area.select();
+      const ok = document.execCommand('copy');
+      area.remove();
+      if (!ok) throw new Error('Il browser non ha autorizzato la copia');
+    }
+
     function renderMessages(items) {
       messagesHeading.textContent = (!fourthSection.hidden ? '07' : state.thirdoption ? '06' : state.suboption ? '05' : '04') + ' — MESSAGGI DISPONIBILI';
       messages.replaceChildren();
+      const filled = items.filter(item => Boolean(item.testo && item.testo.trim()));
       for (const item of items) {
         const card = document.createElement('article');
         card.className = 'message';
@@ -990,36 +1023,36 @@ _Team Billding_`
         if (testo) {
           const body = document.createElement('p');
           body.textContent = testo;
-          const actions = document.createElement('div');
-          actions.className = 'actions';
-          const copy = document.createElement('button');
-          copy.type = 'button';
-          copy.className = 'copy';
-          copy.textContent = '📋 Copia messaggio';
-          copy.addEventListener('click', async () => {
+          const status = document.createElement('div');
+          status.className = 'copy-status';
+          status.setAttribute('role','status');
+          status.setAttribute('aria-live','polite');
+          card.classList.add('clickable');
+          card.tabIndex = 0;
+          card.setAttribute('role','button');
+          card.setAttribute('aria-label','Copia messaggio: '+item.titolo);
+          async function doCopy() {
             try {
-              if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(testo);
-              } else {
-                const selection = document.createElement('textarea');
-                selection.value = testo;
-                selection.style.position = 'fixed';
-                selection.style.opacity = '0';
-                document.body.appendChild(selection);
-                selection.select();
-                const ok = document.execCommand('copy');
-                selection.remove();
-                if (!ok) throw new Error('Copia non consentita');
-              }
-              copy.textContent = '✅ Copiato!';
-              copy.classList.add('copied');
-            } catch (err) {
-              copy.textContent = 'Copia non riuscita';
-              console.error(err);
+              await copyToClipboard(testo);
+              status.textContent = '✅ Copiato negli appunti';
+              status.classList.remove('error');
+            } catch (error) {
+              status.textContent = '⚠️ Copia automatica bloccata: clicca sul messaggio per riprovare';
+              status.classList.add('error');
+              console.error(error);
+            }
+          }
+          card.addEventListener('click', doCopy);
+          card.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault(); doCopy();
             }
           });
-          actions.appendChild(copy);
-          card.append(title,body,actions);
+          status.textContent = filled.length === 1 ? 'Copia automatica in corso…' : 'Tocca questo messaggio per copiarlo';
+          card.append(title,body,status);
+          // Con un solo messaggio completo, l'apertura dell'ultimo menu lo copia subito.
+          // Se una voce contiene più messaggi, l'utente sceglie quale copiare cliccando la scheda.
+          if (filled.length === 1) void doCopy();
         } else {
           const empty = document.createElement('div');
           empty.className = 'empty';
